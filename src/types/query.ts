@@ -1,9 +1,11 @@
+export interface QueryUser {
+  name: string;
+}
+
 export interface Query {
   id: number;
-  search: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
+  module: string;
+  user: QueryUser;
 }
 
 export interface QueryResponse {

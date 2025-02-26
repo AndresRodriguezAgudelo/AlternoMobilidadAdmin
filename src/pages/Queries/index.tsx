@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { TitleSearch } from '../../components/titleSearch';
 import { Filters } from '../../components/filters';
 import { Table } from '../../components/table';
-import { useQueries, queryTableHeaders } from '../../customHooks/pages/queries/customHook';
+import { useQueries, queryTableHeaders, customRenderers } from '../../customHooks/pages/queries/customHook';
 import './styled.css';
 
 type FilterOption = {
@@ -61,7 +61,7 @@ const Queries = () => {
     <div className="queries-container">
       <TitleSearch 
         progressScreen={false} 
-        label="Historial de búsquedas" 
+        label="Gestion de consultas" 
         onSearch={handleSearch} 
       />
       <Filters 
@@ -72,6 +72,7 @@ const Queries = () => {
         headers={queryTableHeaders} 
         data={queries} 
         loading={loading}
+        customRenderers={customRenderers}
         pagination={{
           page: meta?.page ? parseInt(meta.page) : 1,
           pageSize: meta?.take ? parseInt(meta.take) : 10,

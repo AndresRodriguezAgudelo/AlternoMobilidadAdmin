@@ -83,7 +83,12 @@ export const useQueries = () => {
 };
 
 export const queryTableHeaders = [
-  { key: 'search', label: 'Búsqueda' },
-  { key: 'createdAt', label: 'Fecha de Creación' },
-  { key: 'updatedAt', label: 'Última Actualización' }
+  { key: 'id', label: 'ID' },
+  { key: 'module', label: 'Módulo' },
+  { key: 'user', label: 'Usuario' }
 ];
+
+// Renderer personalizado para mostrar el nombre del usuario
+export const customRenderers = {
+  'user': (user: any) => user?.name || 'N/A'
+};
