@@ -1,0 +1,93 @@
+:root {
+
+  line-height: 1.5;
+  font-weight: 400;
+  /* Colores principales */
+  --blue-dark: #0e5d9e;
+  --blue-light: #2fa8e0;
+  --blue-cloud: #e8f7fc;
+  --neutral-dark: #1f3240;
+  --neutral-light: #e8f7fc;
+
+  /* Escala de grises */
+  --gray-50: #f7f7f7;
+  --gray-200: #cccccc;
+  --gray-600: #7a7a7a;
+  --gray-800: #2e2e2e;
+  --white: #ffffff;
+  --black: #000000;
+
+  /* tamaños - usando base 16px */
+  --size-base: 16px;
+  --size-xxs: 4px;    /* 0.25 * base */
+  --size-xs: 6px;     /* 0.375 * base */
+  --size-s: 8px;      /* 0.5 * base */
+  --size-sm: 14px;    /* 0.75 * base */
+  --size-ml: 24px;    /* 1.5 * base */
+  --size-l: 28px;     /* 2 * base */
+  --size-xl: 48px;    /* 3 * base */
+
+  /* Border radius */
+  --default-border: 8px;      /* 0.5 * base */
+
+  /* Tipografía */
+  --font-family: 'Geomanist', sans-serif;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url('./assets/geomanist/geomanist-regular-webfont.woff2') format('woff2'),
+       url('./assets/geomanist/geomanist-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url('./assets/geomanist/geomanist-medium-webfont.woff2') format('woff2'),
+       url('./assets/geomanist/geomanist-medium-webfont.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url('./assets/geomanist/geomanist-bold-webfont.woff2') format('woff2'),
+       url('./assets/geomanist/geomanist-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: normal;
+  font-size: var(--size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Estilos de tipografía */
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+  font-family: var(--font-family);
+  font-weight: bold;
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+}
+
+.body-text {
+  font-family: var(--font-family);
+  font-weight: normal;
+}

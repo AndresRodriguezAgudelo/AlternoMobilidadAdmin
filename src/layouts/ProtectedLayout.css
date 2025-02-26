@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.layout-content {
+  flex: 1;
+  min-width: 0; /* Permite que el contenido se encoja */
+  overflow: hidden;
+  padding: 2rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0px;
+}

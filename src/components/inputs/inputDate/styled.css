@@ -1,0 +1,34 @@
+.input-date-container {
+  width: 100%;
+  max-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-date-label {
+  font-size: var(--size-sm);
+  color: var(--neutral-dark);
+}
+
+.input-date {
+  width: 100%;
+
+  padding: 8px 12px;
+  border: 1px solid var(--neutral-light);
+  border-radius: var(--default-border);
+  background-color: var(--gray-50);
+  font-size: var(--size-sm);
+  color: var(--neutral-dark);
+  transition: all 0.3s ease;
+}
+
+.input-date:hover {
+  background-color: var(--blue-cloud);
+}
+
+.input-date:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: var(--neutral-lighter);
+}

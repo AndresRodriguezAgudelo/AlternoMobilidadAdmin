@@ -1,0 +1,116 @@
+.service-card-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: grab;
+}
+
+.service-card-container:active {
+  cursor: grabbing;
+}
+
+.service-drag-handle {
+  color: var(--gray-400);
+  cursor: grab;
+}
+
+.service-drag-handle:active {
+  cursor: grabbing;
+}
+
+.service-id-container {
+  background-color: var(--blue-light);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-id {
+  color: white;
+  font-weight: 500;
+}
+
+.service-content {
+  flex: 1;
+  background-color: var(--blue-cloud);
+  border-radius: var(--default-border);
+  display: flex;
+  gap: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100px;
+  transition: box-shadow 0.3s ease;
+}
+
+.service-content.highlight {
+  animation: highlightCard 1s ease;
+}
+
+@keyframes highlightCard {
+  0% {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 149, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.service-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 1rem;
+  background-color: var(--blue-cloud);
+  margin: 0 15px 0 0;
+}
+
+.delete-button {
+  color: var(--red) !important;
+}
+
+.service-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--blue-cloud);
+}
+
+.service-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.service-description {
+  margin: 0;
+  font-size: var(--size-sm);
+  color: var(--gray-600);
+}
+
+.service-link {
+  color: var(--blue-500);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.service-link:hover {
+  text-decoration: underline;
+}
+
+.service-image {
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: var(--default-border);
+  border-bottom-left-radius: var(--default-border);
+}

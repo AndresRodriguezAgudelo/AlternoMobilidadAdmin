@@ -1,0 +1,85 @@
+.input-password-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xs);
+  width: 100%;
+}
+
+.input-password-label {
+  font-size: var(--size-sm);
+  font-weight: 500;
+  color: var(--neutral-dark);
+}
+
+.input-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-password {
+  padding: var(--size-sm) var(--size-ml);
+  padding-right: 2.5rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--default-border);
+  font-size: var(--size-sm);
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.input-password:focus {
+  outline: none;
+  border-color: var(--blue-light);
+  box-shadow: 0 0 0 3px rgba(47, 168, 224, 0.1);
+}
+
+.input-password-error {
+  border-color: #FF4D4D;
+}
+
+.input-password-error:focus {
+  border-color: #FF4D4D;
+  box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.1);
+}
+
+.input-password-error-container {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xs);
+  margin-top: var(--size-xxs);
+}
+
+.input-password-error-icon {
+  color: #FF4D4D;
+  font-size: var(--size-sm);
+}
+
+.input-password-error-message {
+  font-size: var(--size-sm);
+  color: #FF4D4D;
+  font-weight: 500;
+}
+
+.input-password-toggle {
+  position: absolute;
+  right: var(--size-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--size-xxs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-500);
+  transition: color 0.2s;
+}
+
+.input-password-toggle:hover {
+  color: var(--neutral-dark);
+}
+
+
+.input-password-error-message {
+  font-size: 0.75rem;
+  color: #DC2626;
+}

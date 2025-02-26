@@ -1,0 +1,102 @@
+.option-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--size-sm);
+  background-color: var(--blue-cloud);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+  min-width: 0;
+}
+
+.option-card {
+  justify-content: center;
+  padding: 10px;
+}
+
+.icon-container {
+  margin-right: 0;
+  transition: margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar:hover .option-card {
+  justify-content: space-between;
+  padding: var(--size-sm);
+}
+
+.sidebar:hover .icon-container {
+  margin-right: var(--size-sm);
+}
+
+.option-card:hover,
+.option-card.active {
+  background-color: var(--blue-light);
+}
+
+.option-card:hover .icon-container,
+.option-card.active .icon-container {
+  background-color: var(--blue-cloud);
+}
+
+.option-card-content {
+  display: flex;
+  align-items: center;
+  gap: var(--size-sm);
+}
+
+.icon-container {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.icon-container svg {
+  color: var(--white);
+  font-size: var(--size-ml);
+  transition: color 0.3s ease;
+}
+
+.option-card:hover .icon-container svg,
+.option-card.active .icon-container svg {
+  color: var(--blue-light);
+}
+
+.option-label {
+  color: var(--black);
+  font-size: var(--size-sm);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.sidebar:hover .option-label {
+  opacity: 1;
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.option-card:hover .option-label,
+.option-card.active .option-label {
+  color: var(--white);
+}
+
+.arrow-icon {
+  color: var(--neutral-dark);
+  font-size: var(--size-sm);
+  transition: color 0.3s ease;
+}
+
+.option-card:hover .arrow-icon,
+.option-card.active .arrow-icon {
+  color: var(--white);
+}

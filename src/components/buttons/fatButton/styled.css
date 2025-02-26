@@ -1,0 +1,33 @@
+.fatbButton {
+  background-color: var(--blue-light);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: var(--size-sm);
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.fatbButton:hover:not(.disabled) {
+  background-color: var(--blue-cloud);
+}
+
+.fatbButton.disabled {
+  background-color: var(--gray-50);
+  color: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.fatbButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--blue-light);
+}
+

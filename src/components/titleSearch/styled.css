@@ -1,0 +1,36 @@
+.title-search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title-search-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title-arrow-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.title-search-label {
+  font-size: var(--size-ml);
+  font-weight: 500;
+  color: var(--neutral-dark);
+  margin: 0;
+  width: 500px;
+  text-align: start;
+}
+
+.title-search-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--size-sm);
+  color: var(--gray-600);
+  margin: 0;
+  width: 100%;
+}

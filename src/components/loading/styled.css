@@ -1,0 +1,59 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loading-spinner {
+  border: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+}
+
+.loading-spinner.inner {
+  animation: spin 1s linear infinite reverse;
+}
+
+/* Tamaños */
+.small .loading-spinner {
+  width: 20px;
+  height: 20px;
+}
+
+.medium .loading-spinner {
+  width: 40px;
+  height: 40px;
+}
+
+.large .loading-spinner {
+  width: 60px;
+  height: 60px;
+}
+
+.small .loading-spinner.inner {
+  width: 12px;
+  height: 12px;
+}
+
+.medium .loading-spinner.inner {
+  width: 24px;
+  height: 24px;
+}
+
+.large .loading-spinner.inner {
+  width: 36px;
+  height: 36px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,35 @@
+.filters-container {
+  width: 100%;
+  padding: 20px 20px 20px 0px;
+}
+
+.filters-label {
+  font-size: var(--size-md);
+  color: var(--black);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.filters-content {
+  display: flex;
+  gap: var(--size-ml);
+  align-items: flex-end;
+}
+
+.filters-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  flex: 1;
+  max-width: 150px;
+}
+
+.filters-actions {
+  display: flex;
+  gap: var(--size-sm);
+  align-items: center;
+  padding-bottom: 4px;
+}

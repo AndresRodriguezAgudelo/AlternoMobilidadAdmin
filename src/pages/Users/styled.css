@@ -1,0 +1,43 @@
+.users-container {
+  padding: 20px;
+}
+
+.error-message {
+  color: #dc3545;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.vehicle-count-button {
+  background: #e8f4ff;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #1976d2;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+.vehicle-count-button:hover {
+  background: #bbdefb;
+  border-color: #64b5f6;
+}
+
+.status-indicator {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.status-indicator.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-indicator.inactive {
+  background-color: #ffebee;
+  color: #c62828;
+}
