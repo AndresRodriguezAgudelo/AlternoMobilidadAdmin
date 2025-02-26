@@ -9,5 +9,8 @@ export const ENDPOINTS = {
   },
   USERS: {
     LIST: `${API_BASE_URL}/user`
+  },
+  QUERIES: {
+    LIST: `${API_BASE_URL}/query-history`
   }
 } as const;

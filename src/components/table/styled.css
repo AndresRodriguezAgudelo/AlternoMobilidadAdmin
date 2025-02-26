@@ -22,14 +22,16 @@
 }
 
 .pagination-info {
-  color: var(--neutral-dark);
-  font-size: var(--size-sm);
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .pagination-controls {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
+  padding: 1rem;
+  gap: 1rem;
 }
 
 .pagination-buttons {
@@ -41,10 +43,9 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
   color: #1976d2;
 }
 
@@ -77,7 +78,8 @@
 
 .clickable-cell {
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  color: #1976d2;
+  text-decoration: underline;
 }
 
 .clickable-cell:hover {

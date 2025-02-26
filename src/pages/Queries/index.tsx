@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { TitleSearch } from '../../components/titleSearch';
 import { Filters } from '../../components/filters';
 import { Table } from '../../components/table';
-import { useQueryData, queryTableHeaders } from '../../customHooks/pages/queries/customHook';
+import { useQueries, queryTableHeaders } from '../../customHooks/pages/queries/customHook';
 import './styled.css';
 
 type FilterOption = {
@@ -19,43 +19,27 @@ const filterOptions: FilterOption[] = [
   {
     label: 'Hasta',
     type: 'date'
-  },
-  {
-    label: 'Módulo de Consulta',
-    type: 'select',
-    options: ['Usuarios', 'Vehículos', 'Reservas', 'Pagos', 'Mantenimiento', 'Reportes', 'Incidencias', 'Configuración']
   }
 ];
 
 const Queries = () => {
-  const { queries } = useQueryData();
+  const { queries, loading, error, meta, setParams } = useQueries();
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, any>>({});
 
-  const filteredQueries = useMemo(() => {
-    return queries.filter(query => {
-      // Filtro por búsqueda
-      if (searchTerm && !query.consulta.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return false;
-      }
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      setParams({
+        page: 1,
+        take: 10,
+        search: searchTerm,
+        startDate: filters.Desde,
+        endDate: filters.Hasta
+      });
+    }, 500);
 
-      // Filtro por fechas
-      const queryDate = query.fConsulta.split('/').reverse().join('-');
-      if (filters.Desde && queryDate < filters.Desde) {
-        return false;
-      }
-      if (filters.Hasta && queryDate > filters.Hasta) {
-        return false;
-      }
-
-      // Filtro por módulo
-      if (filters['Módulo de Consulta'] && query.moduloConsulta !== filters['Módulo de Consulta']) {
-        return false;
-      }
-
-      return true;
-    });
-  }, [queries, searchTerm, filters]);
+    return () => clearTimeout(debounceTimer);
+  }, [searchTerm, filters]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -65,11 +49,36 @@ const Queries = () => {
     setFilters(filterValues);
   };
 
+  const handlePageChange = (page: number) => {
+    setParams(prev => ({ ...prev, page }));
+  };
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
   return (
     <div className="queries-container">
-      <TitleSearch progressScreen={false} label="Gestión de consultas" onSearch={handleSearch} />
-      <Filters filters={filterOptions} onChange={handleFilterChange} />
-      <Table headers={queryTableHeaders} data={filteredQueries} />
+      <TitleSearch 
+        progressScreen={false} 
+        label="Historial de búsquedas" 
+        onSearch={handleSearch} 
+      />
+      <Filters 
+        filters={filterOptions} 
+        onChange={handleFilterChange} 
+      />
+      <Table 
+        headers={queryTableHeaders} 
+        data={queries} 
+        loading={loading}
+        pagination={{
+          page: meta?.page ? parseInt(meta.page) : 1,
+          pageSize: meta?.take ? parseInt(meta.take) : 10,
+          total: meta?.total || 0,
+          onChange: handlePageChange
+        }}
+      />
     </div>
   );
 };

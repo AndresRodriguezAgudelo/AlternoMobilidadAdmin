@@ -21,55 +21,62 @@ interface TableHeader {
 
 type CustomRenderer = (value: any) => React.ReactNode;
 
+interface PaginationProps {
+  page: number;
+  pageSize: number;
+  total: number;
+  onChange: (page: number) => void;
+}
+
 interface TableProps {
   headers: TableHeader[];
   data: any[];
-  itemsPerPage?: number;
   loading?: boolean;
   onCellClick?: (row: any, column: string) => void;
   customRenderers?: Record<string, CustomRenderer>;
+  pagination?: PaginationProps;
 }
 
 export const Table = ({ 
   headers, 
   data, 
-  itemsPerPage = 10,
   loading = false,
   onCellClick,
-  customRenderers = {}
+  customRenderers = {},
+  pagination
 }: TableProps) => {
-  const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = data.slice(startIndex, endIndex);
+  const renderPagination = () => {
+    if (!pagination) return null;
 
-  const handlePrevPage = () => {
-    if (page > 1) setPage(page - 1);
-  };
+    const { page, pageSize, total, onChange } = pagination;
+    const totalPages = Math.ceil(total / pageSize);
 
-  const handleNextPage = () => {
-    if (page < totalPages) setPage(page + 1);
-  };
-
-  const handleCellClick = (row: any, column: string) => {
-    if (onCellClick && headers.find(h => h.key === column)?.isModal) {
-      onCellClick(row, column);
-    }
-  };
-
-  if (loading) {
     return (
-      <div className="table-loading">
-        <CircularProgress />
+      <div className="pagination-controls">
+        <button 
+          onClick={() => onChange(page - 1)}
+          disabled={page <= 1 || loading}
+          className="pagination-button"
+        >
+          <ArrowBackIosNewIcon />
+        </button>
+        <span className="pagination-info">
+          Página {page} de {totalPages}
+        </span>
+        <button 
+          onClick={() => onChange(page + 1)}
+          disabled={page >= totalPages || loading}
+          className="pagination-button"
+        >
+          <ArrowForwardIosIcon />
+        </button>
       </div>
     );
-  }
+  };
 
   return (
     <div className="table-container">
-      <TableContainer component={Paper} className="mui-table-container">
+      <TableContainer component={Paper}>
         <MuiTable>
           <TableHead>
             <TableRow>
@@ -79,43 +86,39 @@ export const Table = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {currentData.map((row, index) => (
-              <TableRow key={index}>
-                {headers.map((header) => (
-                  <TableCell 
-                    key={header.key}
-                    onClick={() => handleCellClick(row, header.key)}
-                    className={header.isModal ? 'clickable-cell' : ''}
-                  >
-                    {customRenderers[header.key] 
-                      ? customRenderers[header.key](row[header.key])
-                      : row[header.key]}
-                  </TableCell>
-                ))}
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={headers.length} align="center">
+                  <CircularProgress />
+                </TableCell>
               </TableRow>
-            ))}
+            ) : data.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={headers.length} align="center">
+                  No hay datos disponibles
+                </TableCell>
+              </TableRow>
+            ) : (
+              data.map((row, index) => (
+                <TableRow key={index}>
+                  {headers.map((header) => (
+                    <TableCell 
+                      key={header.key}
+                      onClick={() => onCellClick && header.isModal ? onCellClick(row, header.key) : undefined}
+                      className={header.isModal ? 'clickable-cell' : ''}
+                    >
+                      {customRenderers[header.key] 
+                        ? customRenderers[header.key](row[header.key])
+                        : row[header.key]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </MuiTable>
       </TableContainer>
-      <div className="pagination-container">
-        <button
-          className="pagination-button"
-          onClick={handlePrevPage}
-          disabled={page === 1}
-        >
-          <ArrowBackIosNewIcon />
-        </button>
-        <span className="page-info">
-          Página {page} de {totalPages}
-        </span>
-        <button
-          className="pagination-button"
-          onClick={handleNextPage}
-          disabled={page === totalPages}
-        >
-          <ArrowForwardIosIcon />
-        </button>
-      </div>
+      {renderPagination()}
     </div>
   );
 };

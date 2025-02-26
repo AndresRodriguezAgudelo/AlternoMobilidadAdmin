@@ -35,17 +35,18 @@ const filterOptions: FilterOption[] = [
 ];
 
 const Users = () => {
-  const { users, loading, error, setParams } = useUserData();
+  const { users, loading, error, meta, setParams } = useUserData();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = (value: string) => {
-    setParams(prev => ({ ...prev, search: value }));
+    setParams(prev => ({ ...prev, search: value, page: 1 }));
   };
 
   const handleFilterChange = (filterValues: Record<string, any>) => {
     setParams(prev => ({
       ...prev,
+      page: 1,
       startDate: filterValues.Desde || undefined,
       endDate: filterValues.Hasta || undefined,
       totalVehicles: filterValues.Vehículos ? parseInt(filterValues.Vehículos) : undefined,
@@ -84,6 +85,10 @@ const Users = () => {
     accepted: renderStatus
   };
 
+  const handlePageChange = (page: number) => {
+    setParams(prev => ({ ...prev, page }));
+  };
+
   if (error) {
     return <div className="error-message">{error}</div>;
   }
@@ -105,6 +110,12 @@ const Users = () => {
         loading={loading}
         onCellClick={handleCellClick}
         customRenderers={customRenderers}
+        pagination={{
+          page: meta?.page ? parseInt(meta.page) : 1,
+          pageSize: meta?.take ? parseInt(meta.take) : 10,
+          total: meta?.total || 0,
+          onChange: handlePageChange
+        }}
       />
       {selectedUser && (
         <VehiclesModal

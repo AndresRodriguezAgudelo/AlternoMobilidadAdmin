@@ -1,83 +1,89 @@
 import { useState, useEffect } from 'react';
+import { api } from '../../../services/api';
+import { ENDPOINTS } from '../../../services/endPoints';
+import { useQueriesStore } from '../../../store/queries';
+import { QueryParams, QueryResponse } from '../../../types/query';
 
-interface QueryData {
-  id: string;
-  consulta: string;
-  usuario: string;
-  consultante: string;
-  moduloConsulta: string;
-  fConsulta: string;
-}
+export const useQueries = () => {
+  const { queries: storedQueries, setQueries, meta, setMeta } = useQueriesStore();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [params, setParams] = useState<QueryParams>({
+    page: 1,
+    take: 10,
+    order: 'ASC'
+  });
 
-const usuarios = [
-  'Juan García', 'María Rodriguez', 'Carlos Martinez', 'Ana Lopez', 
-  'Pedro Gonzalez', 'Laura Perez', 'Diego Sanchez', 'Sofia Ramirez'
-];
+  const fetchQueries = async (
+    page: number = 1,
+    take: number = 10,
+    order: 'ASC' | 'DESC' = 'ASC',
+    search?: string,
+    startDate?: string,
+    endDate?: string
+  ) => {
+    try {
+      setLoading(true);
+      setError(null);
 
-const consultantes = [
-  'Admin Sistema', 'Soporte Técnico', 'Servicio Cliente', 'Gerente Operaciones',
-  'Analista Datos', 'Coordinador Flota', 'Supervisor Regional', 'Asesor Ventas'
-];
+      const queryParams: Record<string, any> = {
+        page,
+        take,
+        order
+      };
 
-const modulosConsulta = [
-  'Usuarios', 'Vehículos', 'Reservas', 'Pagos', 
-  'Mantenimiento', 'Reportes', 'Incidencias', 'Configuración'
-];
+      if (search) queryParams.search = search;
+      if (startDate) queryParams.startDate = startDate;
+      if (endDate) queryParams.endDate = endDate;
 
-const tiposConsulta = [
-  'Actualización de datos', 'Consulta de estado', 'Reporte de problema',
-  'Solicitud de información', 'Modificación de reserva', 'Verificación de pago',
-  'Cambio de configuración', 'Reporte de incidente'
-];
+      const response = await api.get<QueryResponse>(ENDPOINTS.QUERIES.LIST, {
+        params: queryParams
+      });
 
-const generarFechaAleatoria = () => {
-  const inicio = new Date(2023, 0, 1).getTime();
-  const fin = new Date().getTime();
-  const fechaAleatoria = new Date(inicio + Math.random() * (fin - inicio));
-  const dia = fechaAleatoria.getDate().toString().padStart(2, '0');
-  const mes = (fechaAleatoria.getMonth() + 1).toString().padStart(2, '0');
-  const anio = fechaAleatoria.getFullYear();
-  return `${dia}/${mes}/${anio}`;
-};
+      setQueries(response.data.data);
+      setMeta(response.data.meta);
+      return { success: true, data: response.data };
+    } catch (err) {
+      console.error('[Queries Hook] Error fetching queries:', err);
+      setError('Error al cargar las búsquedas');
+      return { success: false, error: 'Error al cargar las búsquedas' };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const generarId = () => {
-  return `QRY-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-};
+  useEffect(() => {
+    if (storedQueries.length > 0 && 
+        params.page === 1 && 
+        params.take === 10 && 
+        params.order === 'ASC' && 
+        !params.search) {
+      setLoading(false);
+      return;
+    }
 
-const generarConsulta = (modulo: string) => {
-  const tipo = tiposConsulta[Math.floor(Math.random() * tiposConsulta.length)];
-  return `${tipo} - ${modulo}`;
-};
+    fetchQueries(
+      params.page,
+      params.take,
+      params.order,
+      params.search,
+      params.startDate,
+      params.endDate
+    );
+  }, [params]);
 
-const generarDatosConsulta = (): QueryData => {
-  const modulo = modulosConsulta[Math.floor(Math.random() * modulosConsulta.length)];
-  
   return {
-    id: generarId(),
-    consulta: generarConsulta(modulo),
-    usuario: usuarios[Math.floor(Math.random() * usuarios.length)],
-    consultante: consultantes[Math.floor(Math.random() * consultantes.length)],
-    moduloConsulta: modulo,
-    fConsulta: generarFechaAleatoria()
+    queries: storedQueries,
+    loading,
+    error,
+    meta,
+    fetchQueries,
+    setParams
   };
 };
 
-export const useQueryData = () => {
-  const [queries, setQueries] = useState<QueryData[]>([]);
-
-  useEffect(() => {
-    const generatedQueries = Array.from({ length: 50 }, () => generarDatosConsulta());
-    setQueries(generatedQueries);
-  }, []);
-
-  return { queries };
-};
-
 export const queryTableHeaders = [
-  { key: 'id', label: 'ID' },
-  { key: 'consulta', label: 'Consulta' },
-  { key: 'usuario', label: 'Usuario' },
-  { key: 'consultante', label: 'Consultante' },
-  { key: 'moduloConsulta', label: 'Módulo de Consulta' },
-  { key: 'fConsulta', label: 'F.Consulta' }
+  { key: 'search', label: 'Búsqueda' },
+  { key: 'createdAt', label: 'Fecha de Creación' },
+  { key: 'updatedAt', label: 'Última Actualización' }
 ];
