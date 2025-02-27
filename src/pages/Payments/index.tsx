@@ -3,22 +3,19 @@ import { TitleSearch } from '../../components/titleSearch';
 import { Filters } from '../../components/filters';
 import { Table } from '../../components/table';
 import { usePaymentData, paymentTableHeaders } from '../../customHooks/pages/payments/customHook';
+import { FilterOption } from '../../types/filters';
 import './styled.css';
-
-type FilterOption = {
-  label: string;
-  type: 'date' | 'select';
-  options?: string[];
-};
 
 const filterOptions: FilterOption[] = [
   {
     label: 'Desde',
-    type: 'date'
+    type: 'date',
+    header: 'startDate'
   },
   {
     label: 'Hasta',
-    type: 'date'
+    type: 'date',
+    header: 'endDate'
   }
 ];
 
@@ -36,10 +33,10 @@ const Payments = () => {
 
       // Filtro por fechas
       const paymentDate = payment.fechaClic.split('/').reverse().join('-');
-      if (filters.Desde && paymentDate < filters.Desde) {
+      if (filters.startDate && paymentDate < filters.startDate) {
         return false;
       }
-      if (filters.Hasta && paymentDate > filters.Hasta) {
+      if (filters.endDate && paymentDate > filters.endDate) {
         return false;
       }
 
@@ -58,7 +55,28 @@ const Payments = () => {
   return (
     <div className="payments-container">
       <TitleSearch progressScreen={false} label="Gestión de pagos" onSearch={handleSearch} />
-      <Filters filters={filterOptions} onChange={handleFilterChange} />
+
+
+
+
+
+      <Filters 
+
+          filters={filterOptions} 
+          onChange={handleFilterChange} 
+
+          
+      />
+
+
+
+
+
+
+
+
+
+
       <Table headers={paymentTableHeaders} data={filteredPayments} />
     </div>
   );

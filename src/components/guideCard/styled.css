@@ -1,0 +1,64 @@
+.guide-card {
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.guide-image {
+  width: 200px;
+  height: 100%;
+}
+
+.guide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide-info {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guide-title {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.guide-category {
+  display: inline-block;
+}
+
+.guide-category span {
+  background-color: #1976d2;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.9em;
+}
+
+.guide-actions {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.guide-date {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.guide-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}

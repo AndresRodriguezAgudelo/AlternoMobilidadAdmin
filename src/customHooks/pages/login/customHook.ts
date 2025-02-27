@@ -34,10 +34,10 @@ export const useLogin = () => {
       
       // Guardar token y datos del usuario
       const { accessToken, user } = response.data;
-      console.log('[Login Hook] Received response:', response.data);
+      //console.log('[Login Hook] Received response:', response.data);
       localStorage.setItem('token', accessToken);
       setToken(accessToken);
-      console.log('[Login Hook] Token stored:', accessToken);
+      //console.log('[Login Hook] Token stored:', accessToken);
       setUser(user);
 
       // Redireccionar al dashboard

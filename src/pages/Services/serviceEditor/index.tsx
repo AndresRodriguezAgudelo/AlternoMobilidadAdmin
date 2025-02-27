@@ -82,9 +82,9 @@ export const ServiceEditor = () => {
         success = result.success;
       } else {
         // Para creación, la imagen es requerida
-        console.log('File object:', formData.image);
-        console.log('File type:', formData.image?.type);
-        console.log('File size:', formData.image?.size);
+        //console.log('File object:', formData.image);
+        //console.log('File type:', formData.image?.type);
+        //console.log('File size:', formData.image?.size);
         
         const createData = {
           name: formData.name,

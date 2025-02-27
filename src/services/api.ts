@@ -18,16 +18,16 @@ export const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    console.log('[API Request] Token from localStorage:', token);
+    //console.log('[API Request] Token from localStorage:', token);
     
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log('[API Request] Headers:', config.headers);
+      //console.log('[API Request] Headers:', config.headers);
     } else {
       console.warn('[API Request] No token found in localStorage');
     }
     
-    console.log('[API Request] URL:', config.url);
+    //console.log('[API Request] URL:', config.url);
     return config;
   },
   (error) => {
@@ -39,8 +39,8 @@ api.interceptors.request.use(
 // Interceptor para las respuestas
 api.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
-    console.log('[API Response] Status:', response.status);
-    console.log('[API Response] Data:', response.data);
+    //console.log('[API Response] Status:', response.status);
+    //console.log('[API Response] Data:', response.data);
     return response;
   },
   (error: AxiosError) => {

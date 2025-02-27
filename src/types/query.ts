@@ -8,6 +8,9 @@ export interface Query {
   user: QueryUser;
 }
 
+// Tipo que define las claves permitidas para filtrado
+export type QueryFilterKeys = keyof Query | 'user.name';
+
 export interface QueryResponse {
   data: Query[];
   meta: {
@@ -27,4 +30,5 @@ export interface QueryParams {
   order?: 'ASC' | 'DESC';
   startDate?: string;
   endDate?: string;
+  module?: string;
 }

@@ -70,12 +70,14 @@ export const useServices = () => {
       search?: string
     ) => {
     try {
-      console.log('[Services Hook] Starting to fetch services');
+      //console.log('[Services Hook] Starting to fetch services');
       setLoading(true);
 
-      const token = localStorage.getItem('token');
-      console.log(localStorage)
-      console.log('[Services Hook] Current token:', token);
+      
+      // const token = localStorage.getItem('token');
+
+      //console.log(localStorage)
+      //console.log('[Services Hook] Current token:', token);
 
       const params: Record<string, any> = {
         page,
@@ -87,16 +89,16 @@ export const useServices = () => {
         params.search = search;
       }
 
-      console.log('[Services Hook] Fetching with params:', params);
+      //console.log('[Services Hook] Fetching with params:', params);
 
       const response = await api.get<ServiceResponse>(ENDPOINTS.SERVICES.LIST, {
         params
       });
 
-      console.log('[Services Hook] Services fetched successfully:', response.data);
+      //console.log('[Services Hook] Services fetched successfully:', response.data);
 
       setServices(response.data.data);
-      console.log('[Services Hook] Services stored in global state');
+      //console.log('[Services Hook] Services stored in global state');
       setMeta(response.data.meta);
       setError(null);
     } catch (err) {
@@ -104,7 +106,7 @@ export const useServices = () => {
       setError('Error al cargar los servicios');
     } finally {
       setLoading(false);
-      console.log('[Services Hook] Fetch operation completed');
+      //console.log('[Services Hook] Fetch operation completed');
     }
   };
 
@@ -115,12 +117,12 @@ export const useServices = () => {
       params.take === 10 &&
       params.order === 'ASC' &&
       !params.search) {
-      console.log('[Services Hook] Using stored services:', storedServices.length);
+      //console.log('[Services Hook] Using stored services:', storedServices.length);
       setLoading(false);
       return;
     }
 
-    console.log('[Services Hook] Fetching services with params:', params);
+    //console.log('[Services Hook] Fetching services with params:', params);
     fetchServices(params.page, params.take, params.order, params.search);
   }, [params]);
 

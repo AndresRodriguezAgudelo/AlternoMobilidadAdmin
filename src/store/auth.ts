@@ -18,7 +18,7 @@ interface AuthState {
 
 const getInitialToken = () => {
   const token = localStorage.getItem('token');
-  console.log('[Auth Store] Initial token:', token);
+  //console.log('[Auth Store] Initial token:', token);
   return token;
 };
 
@@ -30,26 +30,26 @@ export const useAuthStore = create<AuthState>((set) => ({
   setUser: (user) => set({ user, isAuthenticated: !!user }),
   
   setToken: (token) => {
-    console.log('[Auth Store] Setting token:', token);
+    //console.log('[Auth Store] Setting token:', token);
     if (token) {
       localStorage.setItem('token', token);
       set({ token, isAuthenticated: true });
-      console.log('[Auth Store] Token stored and state updated');
+      //console.log('[Auth Store] Token stored and state updated');
     } else {
       localStorage.removeItem('token');
       set({ token: null, isAuthenticated: false });
-      console.log('[Auth Store] Token removed and state cleared');
+      //console.log('[Auth Store] Token removed and state cleared');
     }
   },
   
   logout: () => {
-    console.log('[Auth Store] Logging out');
+    //console.log('[Auth Store] Logging out');
     localStorage.removeItem('token');
     set({
       user: null,
       token: null,
       isAuthenticated: false
     });
-    console.log('[Auth Store] Logout complete - State cleared');
+    //console.log('[Auth Store] Logout complete - State cleared');
   }
 }));

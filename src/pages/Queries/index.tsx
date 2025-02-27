@@ -3,83 +3,115 @@ import { TitleSearch } from '../../components/titleSearch';
 import { Filters } from '../../components/filters';
 import { Table } from '../../components/table';
 import { useQueries, queryTableHeaders, customRenderers } from '../../customHooks/pages/queries/customHook';
+import { FilterOption } from '../../types/filters';
 import './styled.css';
 
-type FilterOption = {
-  label: string;
-  type: 'date' | 'select';
-  options?: string[];
-};
-
-const filterOptions: FilterOption[] = [
+const getFilterOptions = (modules: string[]): FilterOption[] => [
   {
     label: 'Desde',
-    type: 'date'
+    type: 'date',
+    header: 'startDate'
   },
   {
     label: 'Hasta',
-    type: 'date'
+    type: 'date',
+    header: 'endDate'
+  },
+  {
+    label: 'Módulo',
+    type: 'select',
+    options: modules,
+    header: 'module'
   }
 ];
 
 const Queries = () => {
-  const { queries, loading, error, meta, setParams } = useQueries();
+  const { queries, loading, error, meta, uniqueModules, setParams, filterQueries } = useQueries();
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<Record<string, any>>({});
 
+  console.log(filters);
+
+  // Este efecto solo maneja la búsqueda por texto
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      setParams({
+      setParams(prev => ({
+        ...prev,
         page: 1,
-        take: 10,
-        search: searchTerm,
-        startDate: filters.Desde,
-        endDate: filters.Hasta
-      });
+        search: searchTerm
+      }));
     }, 500);
 
     return () => clearTimeout(debounceTimer);
-  }, [searchTerm, filters]);
+  }, [searchTerm]);
+
+  // Inicializar parámetros base
+  useEffect(() => {
+    setParams({
+      page: 1,
+      take: 10,
+      order: 'ASC'
+    });
+  }, []);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
   };
 
   const handleFilterChange = (filterValues: Record<string, any>) => {
+    // Almacenamos los valores para usarlos cuando se apliquen los filtros
     setFilters(filterValues);
   };
 
+  const handleApplyFilters = (formattedFilters: Record<string, any>) => {
+    console.log('Filtros recibidos en Queries:', formattedFilters);
+    // Aplicar filtros localmente
+    filterQueries(formattedFilters);
+  };
+
   const handlePageChange = (page: number) => {
-    setParams(prev => ({ ...prev, page }));
+    setParams(prev => ({
+      ...prev,
+      page
+    }));
   };
 
   if (error) {
-    return <div className="error-message">{error}</div>;
+    return <div>Error: {error}</div>;
   }
 
   return (
     <div className="queries-container">
-      <TitleSearch 
+      <div className="queries-header">
+        <TitleSearch
         progressScreen={false} 
         label="Gestion de consultas" 
         onSearch={handleSearch} 
-      />
-      <Filters 
-        filters={filterOptions} 
-        onChange={handleFilterChange} 
-      />
-      <Table 
-        headers={queryTableHeaders} 
-        data={queries} 
-        loading={loading}
-        customRenderers={customRenderers}
-        pagination={{
+        />
+      </div>
+
+      <div className="queries-filters">
+        <Filters
+        filters={getFilterOptions(uniqueModules)} 
+        onChange={handleFilterChange}
+          onApply={handleApplyFilters}
+        />
+      </div>
+
+      <div className="queries-table">
+        <Table
+          data={queries}
+          headers={queryTableHeaders}
+          customRenderers={customRenderers}
+          loading={loading}
+          pagination={{
           page: meta?.page ? parseInt(meta.page) : 1,
           pageSize: meta?.take ? parseInt(meta.take) : 10,
           total: meta?.total || 0,
           onChange: handlePageChange
-        }}
-      />
+          }}
+        />
+      </div>
     </div>
   );
 };

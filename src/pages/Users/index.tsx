@@ -5,33 +5,20 @@ import { Table } from '../../components/table';
 import { useUserData, userTableHeaders } from '../../customHooks/pages/user/customHook';
 import { VehiclesModal } from '../../components/vehiclesModal';
 import { User } from '../../types/user';
+import { FilterOption } from '../../types/filters';
 import './styled.css';
-
-type FilterOption = {
-  label: string;
-  type: 'date' | 'select';
-  options?: string[];
-};
 
 const filterOptions: FilterOption[] = [
   {
     label: 'Desde',
-    type: 'date'
+    type: 'date',
+    header: 'startDate'
   },
   {
     label: 'Hasta',
-    type: 'date'
-  },
-  {
-    label: 'Vehículos',
-    type: 'select',
-    options: ['1', '2', '3', '4', '5']
-  },
-  {
-    label: 'Estado',
-    type: 'select',
-    options: ['true', 'false']
-  },
+    type: 'date',
+    header: 'endDate'
+  }
 ];
 
 const Users = () => {
@@ -49,8 +36,6 @@ const Users = () => {
       page: 1,
       startDate: filterValues.Desde || undefined,
       endDate: filterValues.Hasta || undefined,
-      totalVehicles: filterValues.Vehículos ? parseInt(filterValues.Vehículos) : undefined,
-      accepted: filterValues.Estado ? filterValues.Estado === 'true' : undefined
     }));
   };
 

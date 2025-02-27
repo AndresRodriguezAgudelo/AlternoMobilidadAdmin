@@ -5,9 +5,10 @@ import { useQueriesStore } from '../../../store/queries';
 import { QueryParams, QueryResponse } from '../../../types/query';
 
 export const useQueries = () => {
-  const { queries: storedQueries, setQueries, meta, setMeta } = useQueriesStore();
+  const { queries: storedQueries, filteredQueries, setQueries, meta, setMeta, filterQueries } = useQueriesStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [uniqueModules, setUniqueModules] = useState<string[]>([]);
   const [params, setParams] = useState<QueryParams>({
     page: 1,
     take: 10,
@@ -20,7 +21,8 @@ export const useQueries = () => {
     order: 'ASC' | 'DESC' = 'ASC',
     search?: string,
     startDate?: string,
-    endDate?: string
+    endDate?: string,
+    module?: string
   ) => {
     try {
       setLoading(true);
@@ -35,13 +37,23 @@ export const useQueries = () => {
       if (search) queryParams.search = search;
       if (startDate) queryParams.startDate = startDate;
       if (endDate) queryParams.endDate = endDate;
+      if (module) queryParams.module = module;
 
       const response = await api.get<QueryResponse>(ENDPOINTS.QUERIES.LIST, {
         params: queryParams
       });
 
-      setQueries(response.data.data);
+      const newData = response.data.data;
+      setQueries(newData);
       setMeta(response.data.meta);
+      
+      // Actualizar módulos únicos
+      const modules = newData.map(item => item.module);
+      setUniqueModules(prev => {
+        const allModules = [...prev, ...modules];
+        return [...new Set(allModules)];
+      });
+      
       return { success: true, data: response.data };
     } catch (err) {
       console.error('[Queries Hook] Error fetching queries:', err);
@@ -68,17 +80,21 @@ export const useQueries = () => {
       params.order,
       params.search,
       params.startDate,
-      params.endDate
+      params.endDate,
+      params.module
     );
   }, [params]);
 
   return {
-    queries: storedQueries,
+    queries: filteredQueries, // Usar las queries filtradas en lugar de todas las queries
+    allQueries: storedQueries, // Mantener acceso a todas las queries si es necesario
     loading,
     error,
     meta,
+    uniqueModules,
     fetchQueries,
-    setParams
+    setParams,
+    filterQueries // Exponer la función de filtrado
   };
 };
 

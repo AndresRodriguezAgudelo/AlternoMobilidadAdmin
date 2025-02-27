@@ -4,20 +4,17 @@ import { InputDate } from '../inputs/inputDate';
 import { InputSelect } from '../inputs/inputSelect';
 import { Button } from '../buttons/simpleButton';
 import { IconButton } from '../buttons/iconButton';
+import { FilterOption } from '../../types/filters';
 import './styled.css';
-
-interface FilterOption {
-  label: string;
-  type: 'date' | 'select';
-  options?: string[];
-}
 
 interface FiltersProps {
   filters: FilterOption[];
   onChange: (filterValues: Record<string, any>) => void;
+  onApply?: (formattedFilters: Record<string, any>) => void;
 }
 
-export const Filters = ({ filters, onChange }: FiltersProps) => {
+export const Filters = ({ filters, onChange, onApply }: FiltersProps) => {
+  // Almacena los valores actuales de los filtros
   const [filterValues, setFilterValues] = useState<Record<string, any>>({});
 
   const handleFilterChange = (label: string, value: any) => {
@@ -26,10 +23,22 @@ export const Filters = ({ filters, onChange }: FiltersProps) => {
       [label]: value
     };
     setFilterValues(newValues);
+    onChange(newValues);
   };
 
+
   const handleApplyFilters = () => {
-    onChange(filterValues);
+    // Crear objeto con estructura {header: value}
+    const formattedFilters = filters.reduce((acumulador, filter) => {
+      if (filterValues[filter.label]) {
+        acumulador[filter.header] = filterValues[filter.label];
+      }
+      return acumulador;
+    }, {} as Record<string, any>);
+    console.log('Filtros aplicados:', formattedFilters);
+    if (onApply) {
+      onApply(formattedFilters);
+    }
   };
 
   const handleDownload = () => {
@@ -41,6 +50,8 @@ export const Filters = ({ filters, onChange }: FiltersProps) => {
       <div className="filters-label">Filtros de búsqueda</div>
       <div className="filters-content">
         <div className="filters-group">
+
+
           {filters.map((filter) => (
             <div key={filter.label} className="filter-item">
               {filter.type === 'date' ? (
@@ -59,17 +70,32 @@ export const Filters = ({ filters, onChange }: FiltersProps) => {
               )}
             </div>
           ))}
+
+
+
         </div>
         <div className="filters-actions">
+
+
+
           <Button
             label="Filtrar"
             onClick={handleApplyFilters}
           />
+
+
+
+
           <IconButton
             Icon={FileDownload}
             onClick={handleDownload}
             title="Descargar PDF"
           />
+
+
+
+
+
         </div>
       </div>
     </div>
