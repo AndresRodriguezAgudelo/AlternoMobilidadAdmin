@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TitleSearch } from '../../components/titleSearch';
 import { GuideCard } from '../../components/guideCard';
 import { useGuides } from '../../customHooks/pages/guides/customHook';
@@ -21,9 +22,10 @@ const Guides = () => {
     }));
   };
 
+  const navigate = useNavigate();
+
   const handleAddGuide = () => {
-    // Implementar navegación a la página de creación de guías
-    console.log('Navegar a crear guía');
+    navigate('/guias/guiasEditor');
   };
 
   if (error) {

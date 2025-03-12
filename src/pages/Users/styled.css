@@ -9,21 +9,30 @@
   font-size: 1.1em;
 }
 
-.vehicle-count-button {
-  background: #e8f4ff;
-  border: 1px solid #90caf9;
-  border-radius: 4px;
-  padding: 4px 8px;
-  color: #1976d2;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: all 0.2s ease;
+.vehicle-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.vehicle-count-button:hover {
-  background: #bbdefb;
-  border-color: #64b5f6;
+.vehicle-count-button {
+  padding: 4px 8px;
+  font-size: 0.9em;
+  background-color: #f5f5f5;
+  border-radius: 4px;
 }
+
+.vehicle-count-label {
+  cursor: pointer;
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.vehicle-count-label:hover {
+  text-decoration: underline;
+  color: #1565c0;
+}
+
 
 .status-indicator {
   padding: 4px 8px;

@@ -7,47 +7,58 @@ interface VehiclesModalProps {
   isOpen: boolean;
   onClose: () => void;
   vehicles: UserVehicle[];
-  userName: string;
 }
+
+const tableHeaders = [
+  { key: 'licensePlate', label: 'Placa' },
+  { key: 'typeDocument', label: 'Tipo de documento' },
+  { key: 'numberDocument', label: 'Documento' },
+  { key: 'dateRegister', label: 'F. Registro' },
+];
 
 export const VehiclesModal: React.FC<VehiclesModalProps> = ({
   isOpen,
   onClose,
   vehicles,
-  userName
 }) => {
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`Vehículos de ${userName}`}
+      title=''
     >
-      <div className="vehicles-list">
-        {vehicles.map((userVehicle) => (
-          <div key={userVehicle.id} className="vehicle-card">
-            <div className="vehicle-info">
-              <div className="info-row">
-                <span className="label">Placa:</span>
-                <span className="value">{userVehicle.vehicle.licensePlate}</span>
-              </div>
-              <div className="info-row">
-                <span className="label">Documento:</span>
-                <span className="value">
-                  {userVehicle.vehicle.typeDocument.typeName} {userVehicle.vehicle.numberDocument}
-                </span>
-              </div>
-              {userVehicle.vehicle.dateRegister && (
-                <div className="info-row">
-                  <span className="label">Fecha de Registro:</span>
-                  <span className="value">{userVehicle.vehicle.dateRegister}</span>
-                </div>
-              )}
+      <div className="vehicles-table">
+        <div className="table-header">
+          {tableHeaders.map(header => (
+            <div key={header.key} className="header-cell">
+              {header.label}
             </div>
-          </div>
-        ))}
-        {vehicles.length === 0 && (
-          <p className="no-vehicles">Este usuario no tiene vehículos registrados.</p>
-        )}
+          ))}
+        </div>
+        <div className="table-body">
+          {vehicles.length === 0 ? (
+            <div className="no-vehicles">No hay vehículos registrados</div>
+          ) : (
+            vehicles.map((userVehicle) => (
+              <div key={userVehicle.id} className="table-row">
+                <div className="table-cell">{userVehicle.vehicle.licensePlate}</div>
+                <div className="table-cell">{userVehicle.vehicle.typeDocument.typeName}</div>
+                <div className="table-cell">{userVehicle.vehicle.numberDocument}</div>
+                <div className="table-cell">{formatDate(userVehicle.vehicle.dateRegister)}</div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </Modal>
   );

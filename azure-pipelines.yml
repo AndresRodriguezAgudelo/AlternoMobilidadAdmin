@@ -1,0 +1,88 @@
+trigger:
+  - main
+  - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'Azure_superApp'  # Nombre correcto de la Service Connection
+  appName: 'EquirentAppAdminFrontend-DEV'  # Nombre exacto del App Service en Azure
+  azureResourceGroup: 'RG_EquisoftFleet_Dev_QA'  # Nombre exacto del Resource Group en Azure
+  nodeVersion: '20.x'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildAndPrepare
+        steps:
+          # 1. Instalar Node.js
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '$(nodeVersion)'
+            displayName: 'Install Node.js $(nodeVersion)'
+
+          # 2. Crear un archivo de prueba en lugar de compilar
+          - script: |
+              echo "<h1>EquirentAppAdminFrontend-DEV Deployment</h1>" > index.html
+              mkdir -p $(Build.ArtifactStagingDirectory)/wwwroot
+              mv index.html $(Build.ArtifactStagingDirectory)/wwwroot/
+            displayName: 'Crear archivo placeholder'
+
+          # 3. Empaquetar en ZIP
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/wwwroot'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+              replaceExistingArchive: true
+            displayName: 'Package as ZIP'
+
+          # 4. Publicar el ZIP como un artifact
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/app.zip'
+              artifact: 'app'
+            displayName: 'Publish Pipeline Artifact'
+
+  - stage: Deploy
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - job: DeployWebApp
+        steps:
+          # 5. Descargar el artifact
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'app'
+              targetPath: '$(Pipeline.Workspace)'
+            displayName: 'Download Pipeline Artifact'
+
+          # 6. Verificar el contenido del ZIP descargado
+          - script: |
+              echo "Listing downloaded artifact contents in $(Pipeline.Workspace):"
+              find "$(Pipeline.Workspace)" -type f -name "app.zip" -print
+              APP_ZIP=$(find "$(Pipeline.Workspace)" -type f -name "app.zip" | head -n 1)
+              if [ -z "$APP_ZIP" ]; then
+                echo "Error: app.zip not found!"
+                exit 1
+              else
+                echo "Contents of $APP_ZIP:"
+                unzip -l "$APP_ZIP"
+              fi
+            displayName: 'Verify Downloaded Artifact'
+
+          # 7. Desplegar en Azure App Service (Run From Package)
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy to Azure App Service'
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: '$(azureSubscription)'  # Usa la Service Connection correcta
+              appType: 'webApp'
+              WebAppName: '$(appName)'  # Nombre exacto del App Service
+              deploymentMethod: 'auto'
+              clean: true
+              packageForLinux: true
+              RuntimeStack: 'NODE|20-lts'
+              Package: '$(Pipeline.Workspace)/app.zip'

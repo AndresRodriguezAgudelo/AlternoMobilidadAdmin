@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import LoginBackground from '../../assets/images/LoginBackground.png';
 import Logo from '../../assets/images/logoTopBar.png';
 import { InputText } from '../../components/inputs/inputText';
@@ -14,24 +14,18 @@ export default function Login() {
     email: '',
     password: ''
   });
-  const [rememberMe, setRememberMe] = useState(false);
-
-  useEffect(() => {
-    const savedEmail = localStorage.getItem('email');
-    if (savedEmail) {
-      setCredentials(prev => ({ ...prev, email: savedEmail }));
-      setRememberMe(true);
-    }
-  }, []);
+  const [acceptedPolicies, setAcceptedPolicies] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (rememberMe) {
-      localStorage.setItem('email', credentials.email);
-    } else {
-      localStorage.removeItem('email');
+    if (!acceptedPolicies) {
+      return;
     }
     await login(credentials);
+  };
+
+  const handleResetPassword = () => {
+    console.log('futuro reset de password')
   };
 
   return (
@@ -71,24 +65,33 @@ export default function Login() {
               value={credentials.password}
               onChange={(value) => setCredentials(prev => ({ ...prev, password: value }))}
               placeholder="Ingresa tu contraseña"
+              resetPass={true}
+              onResetClick={() => handleResetPassword()}
               error={error ? true : false}
             />
             
-            {error && <div className="login-error">{error}</div>}
+            {error && <div className="login-error"> 
+              <span className="input-text-error-icon">⚠ </span>
+              {error}
+              
+              </div>}
             
             <div className="login-options">
               <InputCheckBox
-                label="Recordarme"
-                checked={rememberMe}
-                onChange={setRememberMe}
+                label=""
+                checked={acceptedPolicies}
+                onChange={setAcceptedPolicies}
               />
-              <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+              <span className="forgot-password">
+                He leído y acepto las
+                <a href="#" className='forgot-password-link'> políticas de protección de <br/> datos personales y seguridad de la información</a>
+              </span>
             </div>
             
             <Button
               type="submit"
               label={loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-              disabled={loading || !credentials.email || !credentials.password}
+              disabled={loading || !credentials.email || !credentials.password || !acceptedPolicies}
             />
           </form>
         </div>

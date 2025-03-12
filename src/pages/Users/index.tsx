@@ -4,6 +4,8 @@ import { Filters } from '../../components/filters';
 import { Table } from '../../components/table';
 import { useUserData, userTableHeaders } from '../../customHooks/pages/user/customHook';
 import { VehiclesModal } from '../../components/vehiclesModal';
+import { SwitchInput } from '../../components/inputs/inputSwitch';
+import { VerifyIcon } from '../../components/verifyIcon';
 import { User } from '../../types/user';
 import { FilterOption } from '../../types/filters';
 import './styled.css';
@@ -18,60 +20,131 @@ const filterOptions: FilterOption[] = [
     label: 'Hasta',
     type: 'date',
     header: 'endDate'
+  },
+  {
+    header: 'vehicles',
+    label: 'Vehículos',
+    type: 'select',
+    options: [
+      'Todo',
+      '1 Vehiculo',
+      '2 Vehiculos'
+    ],
+  },
+  {
+    header: 'estado',
+    label: 'Estado',
+    type: 'select',
+    options: [
+      'Todos',
+      'Activos',
+      'Inactivos'
+    ],
   }
 ];
 
 const Users = () => {
-  const { users, loading, error, meta, setParams } = useUserData();
+  const { users, loading, error, meta, updateUserStatus, fetchUsers } = useUserData();
+  const [currentFilters, setCurrentFilters] = useState<Record<string, any>>({});
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = (value: string) => {
-    setParams(prev => ({ ...prev, search: value, page: 1 }));
+    const newFilters = { ...currentFilters, search: value };
+    setCurrentFilters(newFilters);
+    applyFiltersAndFetch(newFilters, 1);
   };
 
   const handleFilterChange = (filterValues: Record<string, any>) => {
-    setParams(prev => ({
-      ...prev,
-      page: 1,
-      startDate: filterValues.Desde || undefined,
-      endDate: filterValues.Hasta || undefined,
-    }));
+    // Este método solo se usa para mantener el estado de los filtros
+    console.log('Cambio en filtros:', filterValues);
   };
 
-  const handleCellClick = (row: any, column: string) => {
-    if (column === 'userVehicles') {
-      setSelectedUser(row);
-      setIsModalOpen(true);
-    }
-  };
+  const applyFiltersAndFetch = (filterValues: Record<string, any>, page: number) => {
+    console.log('Aplicando filtros:', filterValues);
+    
+    const totalVehicles = filterValues.vehicles === '1 Vehiculo' ? 1 : 
+                         filterValues.vehicles === '2 Vehiculos' ? 2 : undefined;
 
-  const renderVehicleCount = (vehicles: any[]) => {
-    return (
-      <button 
-        className="vehicle-count-button"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {vehicles.length} vehículo(s)
-      </button>
+    const status = filterValues.estado === 'Activos' ? true :
+                  filterValues.estado === 'Inactivos' ? false : undefined;
+
+    fetchUsers(
+      page,
+      10,
+      'ASC',
+      filterValues.search,
+      filterValues.startDate,
+      filterValues.endDate,
+      totalVehicles,
+      status
     );
   };
 
-  const renderStatus = (accepted: boolean) => {
+  const handleApplyFilters = (filterValues: Record<string, any>) => {
+    setCurrentFilters(filterValues);
+    applyFiltersAndFetch(filterValues, 1);
+  };
+
+
+
+  const renderVehicleCount = (vehicles: any[], row: User) => {
     return (
-      <span className={`status-indicator ${accepted ? 'active' : 'inactive'}`}>
-        {accepted ? 'Activo' : 'Inactivo'}
-      </span>
+      <div className="vehicle-info">
+        <span className="vehicle-count-button">
+          {vehicles.length}
+        </span>
+        <span 
+          className="vehicle-count-label"
+          onClick={() => {
+            setSelectedUser(row);
+            setIsModalOpen(true);
+          }}
+        >
+          Ver detalle
+        </span>
+      </div>
+    );
+  };
+
+  const renderStatus = (value: boolean, row: User) => {
+    return (
+      <SwitchInput 
+        value={value}
+        onChange={async (newValue) => {
+          await updateUserStatus(row.id, newValue);
+        }}
+      />
+    );
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  };
+
+  const renderEmail = (email: string, row: User) => {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {email}
+        <VerifyIcon verified={row.verify} />
+      </div>
     );
   };
 
   const customRenderers = {
     userVehicles: renderVehicleCount,
-    accepted: renderStatus
+    status: renderStatus,
+    createdAt: formatDate,
+    email: renderEmail
   };
 
   const handlePageChange = (page: number) => {
-    setParams(prev => ({ ...prev, page }));
+    applyFiltersAndFetch(currentFilters, page);
   };
 
   if (error) {
@@ -87,13 +160,14 @@ const Users = () => {
       />
       <Filters 
         filters={filterOptions} 
-        onChange={handleFilterChange} 
+        onChange={handleFilterChange}
+        onApply={handleApplyFilters}
       />
       <Table 
         headers={userTableHeaders} 
         data={users} 
         loading={loading}
-        onCellClick={handleCellClick}
+
         customRenderers={customRenderers}
         pagination={{
           page: meta?.page ? parseInt(meta.page) : 1,
@@ -110,7 +184,6 @@ const Users = () => {
             setSelectedUser(null);
           }}
           vehicles={selectedUser.userVehicles}
-          userName={selectedUser.name}
         />
       )}
     </div>

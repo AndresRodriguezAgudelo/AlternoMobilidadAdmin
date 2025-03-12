@@ -1,15 +1,27 @@
 import { useState, useRef } from 'react';
+
+const isVideo = (url: string) => {
+  return url.startsWith('data:video/') || url.match(/\.(mp4|mov)$/i);
+};
 import { Upload, DeleteOutline } from '@mui/icons-material';
 import { IconButton } from '../../buttons/iconButton';
 import './styled.css';
 
-interface InputImageProps {
+interface InputFileProps {
   label: string;
   onChange: (file: File | null) => void;
   value?: string;
+  accept?: 'image' | 'video' | 'both';
+  maxSize?: number; // en MB
 }
 
-export const InputImage = ({ label, onChange, value }: InputImageProps) => {
+export const InputFile = ({ 
+  label, 
+  onChange, 
+  value, 
+  accept = 'image',
+  maxSize = 5 // 5MB por defecto
+}: InputFileProps) => {
   const [preview, setPreview] = useState<string | undefined>(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,14 +58,29 @@ export const InputImage = ({ label, onChange, value }: InputImageProps) => {
           onClick={handleClick}
         >
         {preview ? (
-          <img src={preview} alt="Preview" className="preview-image" />
+          isVideo(preview) ? (
+            <video 
+              src={preview} 
+              controls 
+              className="preview-video"
+            />
+          ) : (
+            <img src={preview} alt="Preview" className="preview-image" />
+          )
         ) : (
           <div className="upload-placeholder">
             <div className="file-types">
               <Upload style={{ fontSize: 34 }} />
-              <span>Subir archivo</span>
+              <span>Subir {accept === 'video' ? 'video' : accept === 'image' ? 'imagen' : 'archivo'}</span>
             </div>
-            <span>Las medidas recomendadas para la imagen son 300[ancho] x 240[alto] píxeles. Los formatos aceptados son: JPG y PNG.</span>
+            <span>
+              {accept === 'video' ? 
+                `Formatos aceptados: MP4 y MOV. Tamaño máximo: ${maxSize}MB` :
+                accept === 'image' ? 
+                `Las medidas recomendadas para la imagen son 300[ancho] x 240[alto] píxeles. Formatos: JPG y PNG. Tamaño máximo: ${maxSize}MB` :
+                `Formatos aceptados: JPG, PNG, MP4 y MOV. Tamaño máximo: ${maxSize}MB`
+              }
+            </span>
           </div>
         )}
         </div>
@@ -72,7 +99,9 @@ export const InputImage = ({ label, onChange, value }: InputImageProps) => {
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png"
+        accept={accept === 'image' ? 'image/jpeg,image/png' : 
+                accept === 'video' ? 'video/mp4,video/quicktime' : 
+                'image/jpeg,image/png,video/mp4,video/quicktime'}
         onChange={handleChange}
         className="input-image-file"
       />

@@ -7,13 +7,17 @@ interface InputPasswordProps {
   onChange: (value: string) => void;
   placeholder?: string;
   error?: boolean;
+  resetPass?: boolean;
+  onResetClick?: () => void;
 }
 
 export const InputPassword = ({ 
   label, 
   value, 
   onChange, 
-  placeholder 
+  placeholder,
+  resetPass = false,
+  onResetClick
 }: InputPasswordProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,7 +27,18 @@ export const InputPassword = ({
 
   return (
     <div className="input-password-container">
-      <label className="input-password-label">{label}</label>
+      <div className="input-password-label-container">
+        <label className="input-password-label">{label}</label>
+        {resetPass && (
+          <button 
+            type="button" 
+            className="reset-password-label"
+            onClick={onResetClick}
+          >
+            Olvidé la contraseña
+          </button>
+        )}
+      </div>
       <div className="input-password-wrapper">
         <input
           type={showPassword ? "text" : "password"}

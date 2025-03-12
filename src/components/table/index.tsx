@@ -18,7 +18,7 @@ interface TableHeader {
   isModal?: boolean;
 }
 
-type CustomRenderer = (value: any) => React.ReactNode;
+type CustomRenderer = (value: any, row?: any) => React.ReactNode;
 
 interface PaginationProps {
   page: number;
@@ -50,8 +50,18 @@ export const Table = ({
     const { page, pageSize, total, onChange } = pagination;
     const totalPages = Math.ceil(total / pageSize);
 
+    // Calculamos el rango de registros mostrados
+    const start = ((page - 1) * pageSize) + 1;
+    const end = Math.min(page * pageSize, total);
+
     return (
       <div className="pagination-controls">
+        <div>
+          {start} - {end} de {total}
+        </div>
+
+        <div className='arrows-container'>
+
         <button 
           onClick={() => onChange(page - 1)}
           disabled={page <= 1 || loading}
@@ -69,6 +79,7 @@ export const Table = ({
         >
           <ArrowForwardIosIcon />
         </button>
+        </div>
       </div>
     );
   };
@@ -107,7 +118,7 @@ export const Table = ({
                       className={header.isModal ? 'clickable-cell' : ''}
                     >
                       {customRenderers[header.key] 
-                        ? customRenderers[header.key](row[header.key])
+                        ? customRenderers[header.key](row[header.key], row)
                         : row[header.key]}
                     </TableCell>
                   ))}

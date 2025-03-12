@@ -21,7 +21,8 @@ export const useUserData = () => {
     search?: string,
     startDate?: string,
     endDate?: string,
-    totalVehicles?: number
+    totalVehicles?: number,
+    status?: boolean
   ) => {
     try {
       setLoading(true);
@@ -33,10 +34,12 @@ export const useUserData = () => {
         order
       };
 
+      // Agregar parámetros de búsqueda y filtros solo si están definidos
       if (search) queryParams.search = search;
       if (startDate) queryParams.startDate = startDate;
       if (endDate) queryParams.endDate = endDate;
-      if (totalVehicles) queryParams.totalVehicles = totalVehicles;
+      if (typeof totalVehicles !== 'undefined') queryParams.totalVehicles = totalVehicles;
+      if (typeof status !== 'undefined') queryParams.status = status;
 
       const response = await api.get<UserResponse>(ENDPOINTS.USERS.LIST, {
         params: queryParams
@@ -75,13 +78,35 @@ export const useUserData = () => {
     );
   }, [params]);
 
+  const updateUserStatus = async (userId: number, newStatus: boolean) => {
+    try {
+      setLoading(true);
+      await api.patch(ENDPOINTS.USERS.UPDATE(userId), { status: newStatus });
+      
+      // Actualizar el estado local
+      const updatedUsers = storedUsers.map(user => 
+        user.id === userId ? { ...user, status: newStatus } : user
+      );
+      setUsers(updatedUsers);
+      
+      return { success: true };
+    } catch (err) {
+      console.error('[Users Hook] Error updating user status:', err);
+      setError('Error al actualizar el estado del usuario');
+      return { success: false, error: 'Error al actualizar el estado del usuario' };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     users: storedUsers,
     loading,
     error,
     meta,
     fetchUsers,
-    setParams
+    setParams,
+    updateUserStatus
   };
 };
 
@@ -90,5 +115,6 @@ export const userTableHeaders = [
   { key: 'phone', label: 'Celular' },
   { key: 'email', label: 'Correo' },
   { key: 'userVehicles', label: 'Vehículos', isModal: true },
-  { key: 'accepted', label: 'Estado' }
+  { key: 'createdAt', label: 'F. Registro' },
+  { key: 'status', label: 'Estado' }
 ];

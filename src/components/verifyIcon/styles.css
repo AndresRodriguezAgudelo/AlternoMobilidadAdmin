@@ -1,0 +1,24 @@
+.verify-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-left: 8px;
+  color: white;
+}
+
+.verify-icon svg {
+  width: 10px;
+  height: 10px;
+  color: white;
+}
+
+.verify-icon.verified {
+  background-color: #319e7c;
+}
+
+.verify-icon.unverified {
+  background-color: #f5a462;
+}

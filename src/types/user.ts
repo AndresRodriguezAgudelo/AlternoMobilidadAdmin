@@ -17,6 +17,7 @@ export interface User {
   email: string;
   name: string;
   accepted: boolean;
+  status: boolean;
   phone: string | null;
   verify: boolean;
   userVehicles: UserVehicle[];
@@ -42,4 +43,5 @@ export interface UserParams {
   startDate?: string;
   endDate?: string;
   totalVehicles?: number;
+  status?: boolean;
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TitleSearch } from '../../../components/titleSearch';
 import { InputText } from '../../../components/inputs/inputText';
-import { InputImage } from '../../../components/inputs/inputImage';
+import { InputFile } from '../../../components/inputs/inputFile';
 import { useServices } from '../../../customHooks/pages/services/customHook';
 import './styled.css';
 
@@ -144,7 +144,7 @@ export const ServiceEditor = () => {
           heightSize={115}
         />
         
-        <InputImage
+        <InputFile
           label="Imagen"
           onChange={handleImageChange}
         />

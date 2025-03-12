@@ -23,15 +23,22 @@
 
 .pagination-info {
   font-size: 0.9rem;
-  color: #666;
 }
 
 .pagination-controls {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 1rem;
   gap: 1rem;
+  color: #000000;
+  font-weight: 500;
+}
+
+.arrows-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination-buttons {
@@ -76,12 +83,3 @@
   width: 100%;
 }
 
-.clickable-cell {
-  cursor: pointer;
-  color: #1976d2;
-  text-decoration: underline;
-}
-
-.clickable-cell:hover {
-  background-color: #f5f5f5;
-}

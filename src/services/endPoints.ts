@@ -8,7 +8,8 @@ export const ENDPOINTS = {
     LIST: `${API_BASE_URL}/servicing`
   },
   USERS: {
-    LIST: `${API_BASE_URL}/user`
+    LIST: `${API_BASE_URL}/user`,
+    UPDATE: (id: number) => `${API_BASE_URL}/user/${id}`
   },
   QUERIES: {
     LIST: `${API_BASE_URL}/query-history`

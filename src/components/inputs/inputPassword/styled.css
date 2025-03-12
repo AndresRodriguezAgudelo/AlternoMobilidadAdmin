@@ -5,10 +5,32 @@
   width: 100%;
 }
 
+.input-password-label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .input-password-label {
   font-size: var(--size-sm);
   font-weight: 500;
   color: var(--neutral-dark);
+}
+
+.reset-password-label {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--size-sm);
+  color: var(--blue-light);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.reset-password-label:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
 }
 
 .input-password-wrapper {
