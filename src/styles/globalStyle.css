@@ -91,3 +91,42 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family);
   font-weight: normal;
 }
+
+
+
+
+/* 
+      conjunto de clases para personalizar el inputDate de MUI libreria 
+      la capa de personalizacion ofrecida por la libreria no alcanza para 
+      cumplir con el figma de diseño por lo que se agregan estas clases 
+      extraidas directamente del node modules bajo el caracter de !important      
+*/
+
+
+.css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: var(--blue-light) !important;
+}
+
+.css-17f9e7e-MuiTypography-root-MuiDayCalendar-weekDayLabel {
+  color: var(--blue-light) !important;
+}
+
+.css-aj5au3-MuiPaper-root-MuiPickersPopper-paper {
+  border-radius: 30px !important; 
+}
+
+.css-1n04w30-MuiInputBase-root-MuiOutlinedInput-root,
+.css-xwn1oi-MuiFormControl-root-MuiTextField-root {
+  border-radius: var(--default-border) !important;
+  background-color: var(--gray-50) !important; 
+  height: 33.75px !important;
+}
+
+.css-1ll44ll-MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+
+.css-hvjq6j-MuiFormLabel-root-MuiInputLabel-root,
+.css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root { 
+ display: none!important;
+}
