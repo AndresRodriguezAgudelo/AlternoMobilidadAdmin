@@ -13,5 +13,8 @@ export const ENDPOINTS = {
   },
   QUERIES: {
     LIST: `${API_BASE_URL}/query-history`
+  },
+  REPORTS: {
+    DOWNLOAD: (module: string) => `${API_BASE_URL}/reports/${module}/excel`
   }
 } as const;

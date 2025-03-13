@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CancelIcon from '@mui/icons-material/Cancel';
 import './styled.css';
 
 interface TableHeader {
@@ -105,7 +106,14 @@ export const Table = ({
             ) : data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={headers.length} align="center">
-                  No hay datos disponibles
+                  <div className="no-results-container">
+                    <div className="no-results-icon">
+                      <CancelIcon sx={{ fontSize: 48, color: '#e05d38' }} />
+                    </div>
+                    <span className="no-results-text">
+                      No se encontraron resultados para tu búsqueda. Intenta con otros términos
+                    </span>
+                  </div>
                 </TableCell>
               </TableRow>
             ) : (

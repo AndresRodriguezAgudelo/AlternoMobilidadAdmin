@@ -6,6 +6,7 @@ import { useUserData, userTableHeaders } from '../../customHooks/pages/user/cust
 import { VehiclesModal } from '../../components/vehiclesModal';
 import { SwitchInput } from '../../components/inputs/inputSwitch';
 import { VerifyIcon } from '../../components/verifyIcon';
+import { useDownloadReport } from '../../customHooks/components/filters/customHook';
 import { User } from '../../types/user';
 import { FilterOption } from '../../types/filters';
 import './styled.css';
@@ -48,6 +49,11 @@ const Users = () => {
   const [currentFilters, setCurrentFilters] = useState<Record<string, any>>({});
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { downloadReport, isDownloading } = useDownloadReport({
+    module: 'users',
+    currentPage: meta?.page ? parseInt(meta.page) : 1
+  });
 
   const handleSearch = (value: string) => {
     const newFilters = { ...currentFilters, search: value };
@@ -162,6 +168,8 @@ const Users = () => {
         filters={filterOptions} 
         onChange={handleFilterChange}
         onApply={handleApplyFilters}
+        onDownload={downloadReport}
+        isDownloading={isDownloading}
       />
       <Table 
         headers={userTableHeaders} 

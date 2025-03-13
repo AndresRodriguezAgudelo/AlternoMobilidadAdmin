@@ -83,3 +83,26 @@
   width: 100%;
 }
 
+.no-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 0;
+}
+
+.no-results-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #faddd7;
+  width: 150px;
+  height: 150px;
+  border-radius: 300px;
+}
+
+.no-results-text {
+  color: black;
+  font-size: 16px;
+  font-weight: 900 ;
+}

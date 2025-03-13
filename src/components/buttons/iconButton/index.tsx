@@ -8,19 +8,29 @@ interface IconButtonProps {
   title?: string;
   backgroundColor?: string;
   color?: string;
+  loading?: boolean;
 }
 
-export const IconButton = ({ Icon, onClick, type = 'button', title, backgroundColor, color }: IconButtonProps) => {
+export const IconButton = ({ 
+  Icon, 
+  onClick, 
+  type = 'button', 
+  title, 
+  backgroundColor, 
+  color,
+  loading = false 
+}: IconButtonProps) => {
   return (
     <button
       type={type}
-      className="icon-button"
+      className={`icon-button ${loading ? 'loading' : ''}`}
       onClick={onClick}
       title={title}
       style={{
         backgroundColor: backgroundColor,
         color: color
       }}
+      disabled={loading}
     >
       <Icon />
     </button>

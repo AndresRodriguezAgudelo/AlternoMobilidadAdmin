@@ -11,9 +11,19 @@ interface FiltersProps {
   filters: FilterOption[];
   onChange: (filterValues: Record<string, any>) => void;
   onApply?: (formattedFilters: Record<string, any>) => void;
+  moduleType?: string;
+  currentPage?: number;
+  onDownload?: (filters: Record<string, any>) => void;
+  isDownloading?: boolean;
 }
 
-export const Filters = ({ filters, onChange, onApply }: FiltersProps) => {
+export const Filters = ({ 
+  filters, 
+  onChange, 
+  onApply,
+  onDownload,
+  isDownloading = false
+}: FiltersProps) => {
   // Almacena los valores actuales de los filtros
   const [filterValues, setFilterValues] = useState<Record<string, any>>({});
 
@@ -42,7 +52,16 @@ export const Filters = ({ filters, onChange, onApply }: FiltersProps) => {
   };
 
   const handleDownload = () => {
-    console.log('descargar funcionalidad');
+    if (onDownload) {
+      // Crear objeto con estructura {header: value} igual que en handleApplyFilters
+      const formattedFilters = filters.reduce((acumulador, filter) => {
+        if (filterValues[filter.label]) {
+          acumulador[filter.header] = filterValues[filter.label];
+        }
+        return acumulador;
+      }, {} as Record<string, any>);
+      onDownload(formattedFilters);
+    }
   };
 
   return (
@@ -89,7 +108,8 @@ export const Filters = ({ filters, onChange, onApply }: FiltersProps) => {
           <IconButton
             Icon={FileDownload}
             onClick={handleDownload}
-            title="Descargar PDF"
+            title="Descargar Excel"
+            loading={isDownloading}
           />
 
 
