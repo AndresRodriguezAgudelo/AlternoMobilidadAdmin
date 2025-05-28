@@ -6,6 +6,7 @@ export interface Query {
   id: number;
   module: string;
   user: QueryUser;
+  createdAt: string;
 }
 
 // Tipo que define las claves permitidas para filtrado

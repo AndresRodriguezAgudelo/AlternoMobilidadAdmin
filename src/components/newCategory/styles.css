@@ -1,0 +1,36 @@
+/* Estilos para NewCategoryModal */
+.new-category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.new-category-error {
+  color: red;
+  font-size: 14px;
+}
+
+.add-category-button {
+  background-color: rgb(46, 168, 224);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.add-category-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ajustes modal Nueva Categoría */
+.new-category-modal {
+  padding: 16px 20px;
+  border-radius: 18px;
+}
+.new-category-modal .modal-header h2 {
+  font-size: 1.2rem;
+  margin: 18px 0 0 12px;
+  font-weight: 500;
+}

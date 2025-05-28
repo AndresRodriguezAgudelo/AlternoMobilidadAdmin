@@ -95,7 +95,8 @@
 .service-description {
   margin: 0;
   font-size: var(--size-sm);
-  color: var(--gray-600);
+  color: black;
+  font-weight: 500;
 }
 
 .service-link {

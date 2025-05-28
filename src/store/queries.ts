@@ -69,8 +69,6 @@ export const useQueriesStore = create<QueriesState>((set, get) => ({
         return queryValue.toLowerCase() === value.toLowerCase();
       });
     });
-
-    console.log('Queries filtradas:', filtered);
     set({ filteredQueries: filtered });
   }
 }));

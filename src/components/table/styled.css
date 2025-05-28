@@ -101,6 +101,29 @@
   border-radius: 300px;
 }
 
+.sortable-header {
+  cursor: pointer;
+}
+
+.sortable-header:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sort-icon {
+  display: flex;
+  align-items: center;
+}
+
+.sort-icon svg {
+    color: rgb(46, 168, 224);
+}
+
 .no-results-text {
   color: black;
   font-size: 16px;

@@ -6,6 +6,7 @@ export interface Service {
   link: string;
   description: string;
   key: string;
+  imageUrl?: string;
   image?: string;
 }
 

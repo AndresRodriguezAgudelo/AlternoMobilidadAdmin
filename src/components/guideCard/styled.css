@@ -1,21 +1,25 @@
 .guide-card {
   display: flex;
+  justify-content: center;
+  align-items: center;
   background: rgb(233, 247, 252);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 0;
+  max-height: 250px;
 }
 
 .guide-image {
-  width: 200px;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  max-height: 250px;
 }
 
 .guide-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .guide-info {
@@ -23,6 +27,8 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
   gap: 8px;
 }
 
@@ -37,11 +43,11 @@
 }
 
 .guide-category span {
-  background-color: #1976d2;
+  background-color: rgb(14, 93, 157);
   color: white;
   padding: 4px 12px;
   border-radius: 16px;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .guide-actions {
@@ -51,6 +57,18 @@
   justify-content: space-around;
   align-items: flex-end;
   min-width: 90px;
+}
+
+.guide-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 3em;
+  line-height: 1.5em;
+  margin-bottom: 8px;
 }
 
 .guide-date {
@@ -66,9 +84,13 @@
   margin-top: 0;
 }
 
+.guide-buttons svg{
+    font-size: 25px;
+}
+
 .guide-date {
   color: #666;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .guide-buttons {

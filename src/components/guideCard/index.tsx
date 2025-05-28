@@ -1,11 +1,11 @@
-import { Edit, Delete } from '@mui/icons-material';
+import { EditOutlined, DeleteOutline } from '@mui/icons-material';
 import { IconButton } from '../buttons/iconButton';
 import './styled.css';
-import imageService from '../../assets/images/imageService.png';
 
 interface GuideCardProps {
   imageUrl: string;
   title: string;
+  description?: string;
   category: string;
   date: string;
   onEdit?: () => void;
@@ -15,6 +15,7 @@ interface GuideCardProps {
 export const GuideCard = ({
   imageUrl,
   title,
+  description,
   category,
   date,
   onEdit,
@@ -33,8 +34,9 @@ export const GuideCard = ({
     }
   };
 
-  // Si imageUrl es vacío, null, undefined o falsy, usar imagen por defecto
-  const displayImage = imageUrl ? imageUrl : imageService;
+  // Usar la URL de imagen proporcionada sin fallback automático
+  // Esto permite que el componente InputFile maneje sus propias imágenes por defecto
+  const displayImage = imageUrl;
 
   return (
     <div className="guide-card">
@@ -42,20 +44,15 @@ export const GuideCard = ({
         <img
           src={displayImage}
           alt={title}
-          style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '10px', background: '#f5f5f5' }}
-          onError={e => {
-            const target = e.target as HTMLImageElement;
-            // Solo reemplaza si aún no es la imagen por defecto
-            if (!target.src.includes('imageService.png')) {
-              console.warn('[GuideCard] Imagen no encontrada, usando fallback:', target.src);
-              target.src = imageService;
-            }
-          }}
+          style={{ width: '100%', maxHeight: '250px', borderRadius: '10px', background: '#f5f5f5' }}
+          // Eliminamos el manejo de errores para que no interfiera con InputFile
+          // Si hay algún problema con la imagen, InputFile ya debería haberlo manejado
         />
       </div>
       
       <div className="guide-info">
         <h3 className="guide-title">{title}</h3>
+        {description && <p className="guide-description">{description}</p>}
         <div className="guide-category">
           <span>{category}</span>
         </div>
@@ -67,13 +64,13 @@ export const GuideCard = ({
           <IconButton
             backgroundColor="#e8f7fc"
             color="black"
-            Icon={Edit}
+            Icon={EditOutlined}
             onClick={handleEdit}
           />
           <IconButton
             backgroundColor="#e8f7fc"
             color="red"
-            Icon={Delete}
+            Icon={DeleteOutline}
             onClick={handleDelete}
           />
         </div>

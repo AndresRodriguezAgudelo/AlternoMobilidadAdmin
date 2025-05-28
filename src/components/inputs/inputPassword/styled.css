@@ -42,7 +42,8 @@
 .input-password {
   padding: var(--size-sm) var(--size-ml);
   padding-right: 2.5rem;
-  border: 1px solid var(--gray-200);
+  border: none;
+  background-color: rgb(240, 240, 240);
   border-radius: var(--default-border);
   font-size: var(--size-sm);
   width: 100%;

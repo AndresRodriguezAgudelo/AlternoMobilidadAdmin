@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { FileDownload } from '@mui/icons-material';
 import { InputDate } from '../inputs/inputDate';
-import { InputSelect } from '../inputs/inputSelect';
 import { Button } from '../buttons/simpleButton';
 import { IconButton } from '../buttons/iconButton';
 import { FilterOption } from '../../types/filters';
 import './styled.css';
+import { InputSelectDropdown } from '../inputs/inputSelectDropdown';
 
 interface FiltersProps {
   filters: FilterOption[];
@@ -15,14 +15,16 @@ interface FiltersProps {
   currentPage?: number;
   onDownload?: (filters: Record<string, any>) => void;
   isDownloading?: boolean;
+  customFilterElement?: ReactNode;
 }
 
-export const Filters = ({ 
-  filters, 
-  onChange, 
+export const Filters = ({
+  filters,
+  onChange,
   onApply,
   onDownload,
-  isDownloading = false
+  isDownloading = false,
+  customFilterElement
 }: FiltersProps) => {
   // Almacena los valores actuales de los filtros
   const [filterValues, setFilterValues] = useState<Record<string, any>>({});
@@ -45,7 +47,6 @@ export const Filters = ({
       }
       return acumulador;
     }, {} as Record<string, any>);
-    console.log('Filtros aplicados:', formattedFilters);
     if (onApply) {
       onApply(formattedFilters);
     }
@@ -80,42 +81,32 @@ export const Filters = ({
                   onChange={(value) => handleFilterChange(filter.label, value)}
                 />
               ) : (
-                <InputSelect
+                <InputSelectDropdown
                   label={filter.label}
                   value={filterValues[filter.label] || ''}
-                  options={filter.options || []}
+                  options={(filter.options || []).map(option => ({ label: option, value: option }))}
                   onChange={(value) => handleFilterChange(filter.label, value)}
                 />
               )}
             </div>
           ))}
-
-
-
+          {customFilterElement && (
+            <div className="filter-item">
+              {customFilterElement}
+            </div>
+          )}
         </div>
         <div className="filters-actions">
-
-
-
           <Button
             label="Filtrar"
             onClick={handleApplyFilters}
           />
-
-
-
-
           <IconButton
             Icon={FileDownload}
             onClick={handleDownload}
             title="Descargar Excel"
             loading={isDownloading}
           />
-
-
-
-
-
         </div>
       </div>
     </div>

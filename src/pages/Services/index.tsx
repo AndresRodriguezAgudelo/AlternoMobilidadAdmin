@@ -5,7 +5,12 @@ import { ServiceCard } from '../../components/serviceCard';
 import { useServices } from '../../customHooks/pages/services/customHook';
 import imageTest from '../../assets/images/imageService.png';
 import { Loading } from '../../components/loading';
+import { showConfirmationModal } from '../../components/confirmationModal';
 import './styled.css';
+import { Service } from '../../store/services';
+
+// Constante que define el número máximo de servicios permitidos
+const MAX_SERVICES = 12;
 
 const Services = () => {
   const navigate = useNavigate();
@@ -13,7 +18,18 @@ const Services = () => {
   const [highlightedId, setHighlightedId] = useState<number | null>(null);
 
   const handleAddService = () => {
-    navigate('/services/serviceEditor');
+    // Verificar si se ha alcanzado el número máximo de servicios
+    if (services.length >= MAX_SERVICES) {
+      showConfirmationModal({
+        title: 'Límite de servicios alcanzado',
+        content: `Has alcanzado el número máximo de servicios permitidos (${MAX_SERVICES}). Para agregar un nuevo servicio, debes eliminar alguno existente.`,
+        buttonText: 'Entendido',
+        onAction: () => {},
+        showCancelButton: false
+      });
+    } else {
+      navigate('/services/serviceEditor');
+    }
   };
 
   const handleEditService = (id: number) => {
@@ -54,15 +70,22 @@ const Services = () => {
           <div className="services-loading">
             <Loading size="large" />
           </div>
-        ) : services.map((service) => (
+        ) : services.map((service: Service, index: number) => (
           <div key={service.id} onDrop={handleDrop(service.id)}>
             <ServiceCard
-              id={service.id}
-              image={service.key ? `/api/sign/v1/files/file/${service.key}` : imageTest}
-              link={service.link}
-              description={service.description}
+              id={index + 1}
+              image={service.imageUrl ? service.imageUrl : imageTest}
+             // link={service.link}
+              description={service.name}
               onEdit={() => handleEditService(service.id)}
-              onDelete={() => deleteService(service.id)}
+              onDelete={() => {
+                showConfirmationModal({
+                  title: '¿Estás seguro de que deseas eliminar este servicio?',
+                  content: 'Esta acción no se puede deshacer.',
+                  buttonText: 'Confirmar',
+                  onAction: () => deleteService(service.id)
+                });
+              }}
               onDragStart={handleDragStart(service.id)}
               isHighlighted={service.id === highlightedId}
             />

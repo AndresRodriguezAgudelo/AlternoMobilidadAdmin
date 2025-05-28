@@ -11,7 +11,7 @@ interface OptionCardProps {
 
 export const OptionCard = ({ icon, label, onClick, isActive = false }: OptionCardProps) => {
   return (
-    <div className={`option-card ${isActive ? 'active' : ''}`} onClick={onClick}>
+    <div className={`option-card ${isActive ? 'active' : ''}`} onClick={onClick} role="button">
       <div className="option-card-content">
         <div className="icon-container">
           <Icon icon={icon} />

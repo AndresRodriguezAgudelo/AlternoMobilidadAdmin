@@ -22,9 +22,11 @@ export const InputText = ({
   heightSize,
   errorMessage
 }: InputTextProps) => {
-  const { error } = validation === 'mail' 
-    ? useMailValidation(value)
-    : { error: '' };
+  // Siempre llamamos al hook, independientemente de la condición
+  const mailValidationResult = useMailValidation(value);
+  
+  // Luego aplicamos la lógica condicional al resultado del hook
+  const error = validation === 'mail' ? mailValidationResult.error : '';
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
@@ -35,7 +37,7 @@ export const InputText = ({
       <label className="input-text-label">{label}</label>
       {heightSize ? (
         <textarea
-          className={`input-text input-text-resizable ${error ? 'input-text-error' : ''}`}
+          className={`input-text input-text-resizable ${(error || errorMessage) ? 'input-text-error' : ''}`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}

@@ -14,9 +14,9 @@
 
 .modal-content {
   background: white;
-  padding: 20px 0px;
+  padding: 20px 0px 0px 0px;
   border-radius: 8px;
-  min-width: 300px;
+  min-width: 200px;
   max-width: 90%;
   max-height: 90vh;
   overflow-y: auto;
@@ -26,23 +26,27 @@
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .modal-close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  padding: 0 20px 0 0;
+  padding: 0;
   color: #666;
+  z-index: 2;
 }
 
 .modal-close:hover {

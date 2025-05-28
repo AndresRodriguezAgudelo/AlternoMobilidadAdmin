@@ -5,13 +5,14 @@ interface ButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  className?: string;
 }
 
-export const Button = ({ label, onClick, type = 'button', disabled = false }: ButtonProps) => {
+export const Button = ({ label, onClick, type = 'button', disabled = false, className = '' }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={`custom-button ${disabled ? 'disabled' : ''}`}
+      className={`custom-button ${disabled ? 'disabled' : ''} ${className}`}
       onClick={onClick}
       disabled={disabled}
     >

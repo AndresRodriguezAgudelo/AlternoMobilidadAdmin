@@ -7,6 +7,7 @@ import './styled.css';
 interface CallToAction {
   label: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 interface TitleSearchProps {
@@ -16,6 +17,7 @@ interface TitleSearchProps {
   callToAction?: CallToAction;
   progressScreen: boolean;
   onBack?: () => void;
+  placeholderSearchInput?: string;
 }
 
 export const TitleSearch = ({ 
@@ -24,7 +26,8 @@ export const TitleSearch = ({
   subTitle,
   callToAction,
   progressScreen,
-  onBack
+  onBack,
+  placeholderSearchInput
 }: TitleSearchProps) => {
   return (
     <div className="title-search-container">
@@ -45,10 +48,11 @@ export const TitleSearch = ({
       {callToAction ? (
         <FatButton 
           label={callToAction.label} 
-          onClick={callToAction.onClick} 
+          onClick={callToAction.onClick}
+          disabled={callToAction.disabled}
         />
       ) : (
-        onSearch && <InputSearch onChange={onSearch} />
+        onSearch && <InputSearch onChange={onSearch} placeholder={placeholderSearchInput}/>
       )}
     </div>
   );

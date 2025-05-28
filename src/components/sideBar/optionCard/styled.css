@@ -23,11 +23,11 @@
 
 .sidebar:hover .option-card {
   justify-content: space-between;
-  padding: var(--size-sm);
+  padding: var(--size-s);
 }
 
 .sidebar:hover .icon-container {
-  margin-right: var(--size-sm);
+  margin-right: var(--size-s);
 }
 
 .option-card:hover,

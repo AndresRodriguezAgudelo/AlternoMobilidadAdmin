@@ -1,53 +1,95 @@
 import { useState, useEffect } from 'react';
+import { api } from '../../../services/api';
+import { ENDPOINTS } from '../../../services/endPoints';
 
-interface PaymentData {
-  idClic: string;
-  usuario: string;
-  fechaClic: string;
+
+export interface PaymentData {
+  id: number;
+  createdAt: string;
+  module: string;
+  user: {
+    name: string;
+  };
 }
 
-const usuarios = [
-  'Juan García', 'María Rodriguez', 'Carlos Martinez', 'Ana Lopez', 
-  'Pedro Gonzalez', 'Laura Perez', 'Diego Sanchez', 'Sofia Ramirez',
-  'Miguel Torres', 'Isabel Flores', 'Jorge Diaz', 'Patricia Reyes'
-];
-
-const generarFechaAleatoria = () => {
-  const inicio = new Date(2023, 0, 1).getTime();
-  const fin = new Date().getTime();
-  const fechaAleatoria = new Date(inicio + Math.random() * (fin - inicio));
-  const dia = fechaAleatoria.getDate().toString().padStart(2, '0');
-  const mes = (fechaAleatoria.getMonth() + 1).toString().padStart(2, '0');
-  const anio = fechaAleatoria.getFullYear();
-  return `${dia}/${mes}/${anio}`;
-};
-
-const generarIdClic = () => {
-  const num = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-  return `CLIC-${num}`;
-};
-
-const generarDatosPago = (): PaymentData => {
-  return {
-    idClic: generarIdClic(),
-    usuario: usuarios[Math.floor(Math.random() * usuarios.length)],
-    fechaClic: generarFechaAleatoria()
-  };
-};
+export interface PaymentMeta {
+  page: string;
+  take: string;
+  total: number;
+  pageCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
 
 export const usePaymentData = () => {
   const [payments, setPayments] = useState<PaymentData[]>([]);
+  const [meta, setMeta] = useState<PaymentMeta | null>(null);
+  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('DESC');
+  const [sortKey, setSortKey] = useState<string>('createdAt');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchPayments = async (
+    page: number = 1,
+    take: number = 50,
+    order: 'ASC' | 'DESC' = 'DESC',
+    search: string = '',
+    startDate?: string,
+    endDate?: string
+  ) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const params: Record<string, any> = {
+        page,
+        take,
+        order,
+        module: 'Link de pago'
+      };
+      
+      // Si hay un término de búsqueda, agregarlo a los parámetros
+      if (search) params.search = search;
+      if (startDate) params.startDate = startDate;
+      if (endDate) params.endDate = endDate;
+      const response = await api.get<{ data: PaymentData[]; meta: PaymentMeta }>(ENDPOINTS.QUERIES.LIST, {
+        params
+      });
+      setPayments(response.data.data);
+      setMeta(response.data.meta);
+    } catch (err: any) {
+      setError('Error al cargar los pagos');
+      setPayments([]);
+      setMeta(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const generatedPayments = Array.from({ length: 50 }, () => generarDatosPago());
-    setPayments(generatedPayments);
+    fetchPayments();
+    // eslint-disable-next-line
   }, []);
 
-  return { payments };
+  const handleSort = (key: string, order: 'ASC' | 'DESC') => {
+    setSortKey(key);
+    setSortOrder(order);
+    fetchPayments(1, 50, order);
+  };
+
+  return {
+    payments,
+    loading,
+    error,
+    meta,
+    fetchPayments,
+    handleSort,
+    sortKey,
+    sortOrder
+  };
 };
 
 export const paymentTableHeaders = [
-  { key: 'idClic', label: 'ID Clic' },
-  { key: 'usuario', label: 'Usuario' },
-  { key: 'fechaClic', label: 'Fecha Clic' }
+  { key: 'id', label: 'ID Evento' },
+  { key: 'user', label: 'Usuario' },
+  { key: 'createdAt', label: 'Fecha de creación', sortable: true, sortKey: 'createdAt' }
 ];

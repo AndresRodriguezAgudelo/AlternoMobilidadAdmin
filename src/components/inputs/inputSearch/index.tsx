@@ -7,7 +7,7 @@ interface InputSearchProps {
   placeholder?: string;
 }
 
-export const InputSearch = ({ onChange, placeholder = 'Buscar...' }: InputSearchProps) => {
+export const InputSearch = ({ onChange, placeholder = 'Buscar usuario por nombre, celular, correo...' }: InputSearchProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };

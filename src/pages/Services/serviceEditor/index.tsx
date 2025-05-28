@@ -3,7 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { TitleSearch } from '../../../components/titleSearch';
 import { InputText } from '../../../components/inputs/inputText';
 import { InputFile } from '../../../components/inputs/inputFile';
+import { Loading } from '../../../components/loading';
 import { useServices } from '../../../customHooks/pages/services/customHook';
+// Ya no necesitamos importar API_BASE_URL
 import './styled.css';
 
 export const ServiceEditor = () => {
@@ -22,6 +24,25 @@ export const ServiceEditor = () => {
     imageChanged: false // NUEVO: indica si la imagen fue cambiada
   });
 
+  // Estados para controlar la validación de campos
+  const [touchedFields, setTouchedFields] = useState({
+    name: false,
+    webLink: false,
+    description: false,
+    image: false
+  });
+
+  // Estado para forzar la visualización del error de imagen
+  const [forceImageError, setForceImageError] = useState(false);
+
+  // Función para marcar un campo como tocado
+  const markFieldAsTouched = (fieldName: string) => {
+    setTouchedFields(prev => ({
+      ...prev,
+      [fieldName]: true
+    }));
+  };
+
   const handleInputChange = (field: string) => (value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -36,32 +57,90 @@ export const ServiceEditor = () => {
       imageChanged: !!file // true si hay archivo, false si se borra
     }));
   };
+  
+  // Estado para controlar si estamos cargando los datos del servicio
+  const [loadingServiceData, setLoadingServiceData] = useState(false);
+
+  // Estado para almacenar la URL de la imagen del servicio
+  const [serviceImageUrl, setServiceImageUrl] = useState<string | undefined>(undefined);
+  
+  // Función específica para manejar la eliminación de la imagen
+  const handleImageDelete = () => {
+    // Primero marcamos el error para que se actualice la UI inmediatamente
+    setForceImageError(true);
+    markFieldAsTouched('image');
+    // Luego eliminamos la imagen
+    handleImageChange(null);
+    // Limpiar la URL de la imagen
+    setServiceImageUrl(undefined);
+  };
 
   useEffect(() => {
-    if (isEditing && serviceId) {
-      const service = getServiceById(serviceId);
-      if (service) {
-        setFormData({
-          name: service.name,
-          webLink: service.link,
-          description: service.description,
-          image: undefined, // La imagen existente ya está en el key
-          imageChanged: false // <-- necesario para cumplir el tipado
-        });
+    // Función asíncrona para cargar los datos del servicio
+    const loadServiceData = async () => {
+      if (isEditing && serviceId) {
+        try {
+          setLoadingServiceData(true);
+          // Forzamos una petición al backend para obtener los datos más recientes
+          const service = await getServiceById(serviceId, true);
+          
+          if (service) {
+            if (service.imageUrl) {
+              setServiceImageUrl(service.imageUrl);
+            }
+            
+            setFormData({
+              name: service.name || '',
+              webLink: service.link || '',
+              description: service.description || '',
+              image: undefined, // La imagen existente ya está en el key
+              imageChanged: false // <-- necesario para cumplir el tipado
+            });
+          } 
+        }
+        
+        catch (error) { } 
+        
+        finally {
+          setLoadingServiceData(false);
+        }
       }
-    }
+    };
+
+    loadServiceData();
+    // No incluir getServiceById en las dependencias para evitar bucles infinitos
   }, [isEditing, serviceId]);
 
-  const handleSave = async () => {
-    // Validar campos requeridos
-    if (!formData.name || !formData.webLink || !formData.description) {
-      console.error('Todos los campos son requeridos');
-      return;
-    }
+  // Verificar si hay errores en los campos requeridos
+  const fieldErrors = {
+    name: !formData.name && touchedFields.name,
+    webLink: !formData.webLink && touchedFields.webLink,
+    description: !formData.description && touchedFields.description,
+    image: (!formData.image && !serviceImageUrl && touchedFields.image) || forceImageError
+  };
+  
+  // Verificar si hay una imagen válida
+  const hasValidImage = !!(formData.image || serviceImageUrl) && !forceImageError;
 
-    // Validar imagen para nuevo servicio
-    if (!isEditing && !formData.image) {
-      console.error('La imagen es requerida para crear un nuevo servicio');
+  // Verificar si el formulario es válido para habilitar el botón guardar
+  const isFormValid = !!(formData.name && 
+                       formData.webLink && 
+                       formData.description && 
+                       hasValidImage);
+                        
+
+  const handleSave = async () => {
+    // Marcar todos los campos como tocados para mostrar errores
+    setTouchedFields({
+      name: true,
+      webLink: true,
+      description: true,
+      image: true
+    });
+
+    // Si el formulario no es válido, no continuar
+    if (!isFormValid) {
+      console.error('Por favor, complete todos los campos obligatorios');
       return;
     }
 
@@ -69,7 +148,7 @@ export const ServiceEditor = () => {
     const link = formData.webLink.toLowerCase().startsWith('http') 
       ? formData.webLink 
       : `https://${formData.webLink}`;
-
+    
     try {
       let success = false;
       
@@ -87,11 +166,6 @@ export const ServiceEditor = () => {
         const result = await updateService(serviceId, updateData);
         success = result.success;
       } else {
-        // Para creación, la imagen es requerida
-        //console.log('File object:', formData.image);
-        //console.log('File type:', formData.image?.type);
-        //console.log('File size:', formData.image?.size);
-        
         const createData = {
           name: formData.name,
           link: link,
@@ -101,9 +175,6 @@ export const ServiceEditor = () => {
         const result = await createService(createData);
         success = result.success;
       }
-      
-
-
       if (success) {
         // Forzar una actualización de la lista antes de navegar
         await fetchServices();
@@ -126,41 +197,66 @@ export const ServiceEditor = () => {
         onBack={handleBack}
         callToAction={{
           label: 'Guardar',
-          onClick: handleSave
+          onClick: handleSave,
+          disabled: !isFormValid
         }}
       />
       
-      <div className="service-editor-form">
+      {loadingServiceData ? (
+        <div className="loading-container" style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
+          <Loading size="large" />
+        </div>
+      ) : (
+        <div className="service-editor-form">
         <InputText
           label="Nombre"
           value={formData.name}
-          onChange={handleInputChange('name')}
+          onChange={(value) => {
+            handleInputChange('name')(value);
+            markFieldAsTouched('name');
+          }}
+          error={fieldErrors.name}
+          errorMessage={fieldErrors.name ? 'Este campo es obligatorio' : ''}
         />
         
         <InputText
           label="Enlace Web"
           value={formData.webLink}
-          onChange={handleInputChange('webLink')}
+          onChange={(value) => {
+            handleInputChange('webLink')(value);
+            markFieldAsTouched('webLink');
+          }}
+          error={fieldErrors.webLink}
+          errorMessage={fieldErrors.webLink ? 'Este campo es obligatorio' : ''}
         />
         
         <InputText
           label="Descripción"
           value={formData.description}
-          onChange={handleInputChange('description')}
+          onChange={(value) => {
+            handleInputChange('description')(value);
+            markFieldAsTouched('description');
+          }}
           heightSize={115}
+          error={fieldErrors.description}
+          errorMessage={fieldErrors.description ? 'Este campo es obligatorio' : ''}
         />
         
         <InputFile
           label="Imagen"
-          onChange={handleImageChange}
-          placeholderImage={
-            isEditing && serviceId && getServiceById(serviceId)?.key &&
-            !getServiceById(serviceId)!.key.includes('imageService.png')
-              ? `/api/sign/v1/files/file/${getServiceById(serviceId)!.key}`
-              : undefined
-          }
+          onChange={(file) => {
+            handleImageChange(file);
+            markFieldAsTouched('image');
+            // Si se agrega un archivo, quitar el error forzado
+            if (file) setForceImageError(false);
+          }}
+          placeholderImage={serviceImageUrl}
+          onDelete={handleImageDelete}
+          error={fieldErrors.image}
+          errorMessage={fieldErrors.image ? 'Este campo es obligatorio' : ''}
         />
       </div>
+      )}
     </div>
   );
 };

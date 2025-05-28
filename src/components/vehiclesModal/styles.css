@@ -10,7 +10,7 @@
   font-weight: 500;
   color: #000000;
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
 }
 
 .table-body {
@@ -31,7 +31,7 @@
 }
 
 .table-row:last-child {
-  border-bottom: none;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .header-cell,
@@ -40,7 +40,29 @@
   align-items: center;
   justify-content: center;
   padding: 0 8px;
+}
 
+.sortable-header {
+  cursor: pointer;
+}
+
+.sortable-header:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sort-icon {
+  display: flex;
+  align-items: center;
+}
+
+.sort-icon svg {
+  color: rgb(46, 168, 224);
 }
 
 .no-vehicles {

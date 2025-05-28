@@ -1,0 +1,89 @@
+.confirmation-modal-overlay {
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-modal-dialog {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 32px 28px 24px 28px;
+  max-width: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: modalIn 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.confirmation-modal-icon-container {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: rgb(14, 93, 157);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.confirmation-modal-icon-container svg {
+  font-size: 36px;
+}
+
+.confirmation-modal-icon {
+  font-size: 36px;
+  color: white;
+}
+
+.confirmation-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.confirmation-modal-content {
+  font-size: 16px;
+  color: #757575;
+  text-align: center;
+}
+
+.confirmation-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  width: 100%;
+  justify-content: center;
+}
+
+.confirmation-modal-primary-button {
+  background-color: rgb(46, 168, 224) !important;
+  color: white !important;
+  cursor: pointer !important;
+}
+
+.confirmation-modal-secondary-button {
+  background-color: white !important;
+  color: rgb(46, 168, 224) !important;
+  cursor: pointer !important;
+}

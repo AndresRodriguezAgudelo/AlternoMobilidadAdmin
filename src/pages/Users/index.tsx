@@ -37,7 +37,7 @@ const filterOptions: FilterOption[] = [
     label: 'Estado',
     type: 'select',
     options: [
-      'Todos',
+      'Todo',
       'Activos',
       'Inactivos'
     ],
@@ -45,7 +45,7 @@ const filterOptions: FilterOption[] = [
 ];
 
 const Users = () => {
-  const { users, loading, error, meta, updateUserStatus, fetchUsers } = useUserData();
+  const { users, loading, error, meta, updateUserStatus, fetchUsers, handleSort, sortKey, sortOrder } = useUserData();
   const [currentFilters, setCurrentFilters] = useState<Record<string, any>>({});
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,23 +61,19 @@ const Users = () => {
     applyFiltersAndFetch(newFilters, 1);
   };
 
-  const handleFilterChange = (filterValues: Record<string, any>) => {
-    // Este método solo se usa para mantener el estado de los filtros
-    console.log('Cambio en filtros:', filterValues);
-  };
+  const handleFilterChange = () => { };
 
   const applyFiltersAndFetch = (filterValues: Record<string, any>, page: number) => {
-    console.log('Aplicando filtros:', filterValues);
-    
-    const totalVehicles = filterValues.vehicles === '1 Vehiculo' ? 1 : 
-                         filterValues.vehicles === '2 Vehiculos' ? 2 : undefined;
+
+    const totalVehicles = filterValues.vehicles === '1 Vehiculo' ? 1 :
+      filterValues.vehicles === '2 Vehiculos' ? 2 : undefined;
 
     const status = filterValues.estado === 'Activos' ? true :
-                  filterValues.estado === 'Inactivos' ? false : undefined;
+      filterValues.estado === 'Inactivos' ? false : undefined;
 
     fetchUsers(
       page,
-      10,
+      50,
       'ASC',
       filterValues.search,
       filterValues.startDate,
@@ -100,12 +96,23 @@ const Users = () => {
         <span className="vehicle-count-button">
           {vehicles.length}
         </span>
-        <span 
+        <span
           className="vehicle-count-label"
           onClick={() => {
             setSelectedUser(row);
             setIsModalOpen(true);
           }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            // Permitir activación con Enter o Space
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setSelectedUser(row);
+              setIsModalOpen(true);
+            }
+          }}
+          aria-label="Ver detalle de vehículos"
         >
           Ver detalle
         </span>
@@ -115,7 +122,7 @@ const Users = () => {
 
   const renderStatus = (value: boolean, row: User) => {
     return (
-      <SwitchInput 
+      <SwitchInput
         value={value}
         onChange={async (newValue) => {
           await updateUserStatus(row.id, newValue);
@@ -159,23 +166,23 @@ const Users = () => {
 
   return (
     <div className="users-container">
-      <TitleSearch 
-        progressScreen={false} 
-        label="Gestión de Usuarios" 
-        onSearch={handleSearch} 
+      <TitleSearch
+        progressScreen={false}
+        label="Gestión de Usuarios"
+        onSearch={handleSearch}
+        placeholderSearchInput="Buscar usuario por nombre, celular, correo..."
       />
-      <Filters 
-        filters={filterOptions} 
+      <Filters
+        filters={filterOptions}
         onChange={handleFilterChange}
         onApply={handleApplyFilters}
         onDownload={downloadReport}
         isDownloading={isDownloading}
       />
-      <Table 
-        headers={userTableHeaders} 
-        data={users} 
+      <Table
+        headers={userTableHeaders}
+        data={users}
         loading={loading}
-
         customRenderers={customRenderers}
         pagination={{
           page: meta?.page ? parseInt(meta.page) : 1,
@@ -183,6 +190,9 @@ const Users = () => {
           total: meta?.total || 0,
           onChange: handlePageChange
         }}
+        onSort={handleSort}
+        currentSortKey={sortKey}
+        currentSortOrder={sortOrder}
       />
       {selectedUser && (
         <VehiclesModal

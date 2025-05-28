@@ -6,6 +6,12 @@ export interface Guide {
   keySecondary: string;
   keyTertiaryVideo: string;
   description: string;
+  createdAt?: string;
+  data?: {
+    mainImageUrl?: string;
+    secondaryImageUrl?: string;
+    tertiaryVideoUrl?: string;
+  };
 }
 
 export interface GuideResponse {

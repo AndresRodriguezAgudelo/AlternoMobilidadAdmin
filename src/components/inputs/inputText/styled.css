@@ -13,7 +13,8 @@
 
 .input-text {
   padding: var(--size-sm) var(--size-ml);
-  border: 1px solid var(--gray-200);
+  border: 1px solid transparent;
+  background-color: rgb(240, 240, 240);
   border-radius: var(--default-border);
   font-size: var(--size-sm);
   transition: all 0.2s;
@@ -34,12 +35,15 @@
 }
 
 .input-text-error {
-  border-color: #FF4D4D;
+  border: 1px solid rgb(226, 111, 81) !important;
+  background-color: rgb(249, 222, 216);
 }
 
+
+
 .input-text-error:focus {
-  border-color: #FF4D4D;
-  box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.1);
+  border-color: rgb(226, 111, 81) !important;
+  box-shadow: 0 0 0 3px rgba(226, 111, 81, 0.1);
 }
 
 .input-text-error-container {
@@ -56,5 +60,5 @@
 
 .input-text-error-message {
   font-size: 0.82rem;
-  color: #FF4D4D;
+  color: rgb(224, 92, 58);
 }

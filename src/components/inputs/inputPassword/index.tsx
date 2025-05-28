@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { VisibilityOutlined, VisibilityOffOutlined } from '@mui/icons-material';
+import { useInputPassword } from '../../../customHooks/components/inputPassword/customHook';
 import './styled.css';
 
 interface InputPasswordProps {
@@ -23,6 +24,7 @@ export const InputPassword = ({
   errorMessage
 }: InputPasswordProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { loading, handleForgotPassword } = useInputPassword();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
@@ -36,9 +38,20 @@ export const InputPassword = ({
           <button 
             type="button" 
             className="reset-password-label"
-            onClick={onResetClick}
+            onClick={() => {
+              // Si se proporciona una función personalizada, usarla
+              if (onResetClick) {
+                onResetClick();
+                return;
+              }
+              
+              // Si no hay función personalizada, disparar directamente el POST al endpoint
+              // No necesitamos ningún parámetro, simplemente disparar la petición
+              handleForgotPassword();
+            }}
+            disabled={loading}
           >
-            Olvidé la contraseña
+            {loading ? 'Enviando...' : 'Olvidé la contraseña'}
           </button>
         )}
       </div>

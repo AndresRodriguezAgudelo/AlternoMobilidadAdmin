@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useGuideEditor.test.tsx">
+    <testCase name="useGuideEditor Hook should initialize with default values and fetch categories on mount" duration="43"/>
+    <testCase name="useGuideEditor Hook should load guide data when in edit mode" duration="5"/>
+    <testCase name="useGuideEditor Hook should handle field changes correctly" duration="5"/>
+    <testCase name="useGuideEditor Hook should create a new guide when submitting in create mode" duration="4"/>
+    <testCase name="useGuideEditor Hook should update an existing guide when submitting in edit mode" duration="5"/>
+    <testCase name="useGuideEditor Hook should handle API error when submitting" duration="5"/>
+    <testCase name="useGuideEditor Hook should navigate back when handleBack is called" duration="1"/>
+    <testCase name="useGuideEditor Hook should handle file deletion correctly for main file" duration="3"/>
+    <testCase name="useGuideEditor Hook should handle file deletion correctly for secondary file" duration="2"/>
+    <testCase name="useGuideEditor Hook should handle file deletion correctly for tertiary file" duration="17"/>
+    <testCase name="useGuideEditor Hook should not duplicate entries in typeDeleted when deleting the same file multiple times" duration="7"/>
+    <testCase name="useGuideEditor Hook should handle API error when fetching categories" duration="26"/>
+    <testCase name="useGuideEditor Hook should handle API error when fetching guide in edit mode" duration="2"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useServices.coverage.test.tsx">
+    <testCase name="useServices Hook - Cobertura Completa getServiceById function should get service from cache when available" duration="15"/>
+    <testCase name="useServices Hook - Cobertura Completa getServiceById function should force refresh when forceRefresh is true" duration="3"/>
+    <testCase name="useServices Hook - Cobertura Completa getServiceById function should use request cache when multiple requests are made for the same ID" duration="6"/>
+    <testCase name="useServices Hook - Cobertura Completa getServiceById function should handle error when service is not found" duration="77"/>
+    <testCase name="useServices Hook - Cobertura Completa getServiceById function should clear cache after TTL expires" duration="16"/>
+    <testCase name="useServices Hook - Cobertura Completa getServiceById function should update local services array when new service is fetched" duration="8"/>
+    <testCase name="useServices Hook - Cobertura Completa deleteService function should delete service successfully" duration="10"/>
+    <testCase name="useServices Hook - Cobertura Completa deleteService function should handle error when deleting service" duration="9"/>
+    <testCase name="useServices Hook - Cobertura Completa createService with FormData should create service with FormData when image is provided" duration="18"/>
+    <testCase name="useServices Hook - Cobertura Completa updateService with FormData should update service with FormData when image is provided" duration="5"/>
+    <testCase name="useServices Hook - Cobertura Completa updateService with FormData should update service without FormData when no image is provided" duration="5"/>
+    <testCase name="useServices Hook - Cobertura Completa updateServiceOrder with local reordering should call API with correct parameters when updating order" duration="4"/>
+    <testCase name="useServices Hook - Cobertura Completa fetchServices with different parameters should fetch services with search parameter when provided" duration="18"/>
+    <testCase name="useServices Hook - Cobertura Completa fetchServices with different parameters should fetch services with default parameters when none provided" duration="1"/>
+    <testCase name="useServices Hook - Cobertura Completa error handling should handle error when fetching services" duration="12"/>
+    <testCase name="useServices Hook - Cobertura Completa error handling should handle error when updating service" duration="4"/>
+    <testCase name="useServices Hook - Cobertura Completa error handling should handle error when creating service" duration="3"/>
+    <testCase name="useServices Hook - Cobertura Completa error handling should handle error when updating service order" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useServices.test.tsx">
+    <testCase name="useServices Hook should initialize with default values and fetch services on mount" duration="21"/>
+    <testCase name="useServices Hook should handle API error when fetching services" duration="14"/>
+    <testCase name="useServices Hook should update params and fetch services with new params" duration="10"/>
+    <testCase name="useServices Hook should create a new service successfully" duration="21"/>
+    <testCase name="useServices Hook should handle error when creating a service" duration="15"/>
+    <testCase name="useServices Hook should update a service successfully" duration="8"/>
+    <testCase name="useServices Hook should handle error when updating a service" duration="3"/>
+    <testCase name="useServices Hook should update service order successfully" duration="2"/>
+    <testCase name="useServices Hook should handle error when updating service order" duration="2"/>
+    <testCase name="useServices Hook should have all required methods" duration="48"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Users.test.tsx">
+    <testCase name="Users Page renders correctly with user data" duration="141"/>
+    <testCase name="Users Page shows loading indicator when loading is true" duration="4"/>
+    <testCase name="Users Page shows error message when there is an error" duration="4"/>
+    <testCase name="Users Page calls fetchUsers when search input changes" duration="25"/>
+    <testCase name="Users Page calls fetchUsers with correct parameters when filters are applied" duration="16"/>
+    <testCase name="Users Page calls downloadReport when download button is clicked" duration="12"/>
+    <testCase name="Users Page calls fetchUsers when page changes" duration="28"/>
+    <testCase name="Users Page handles vehicle modal state correctly" duration="10"/>
+    <testCase name="Users Page calls updateUserStatus when status toggle is clicked" duration="9"/>
+    <testCase name="Users Page formats date correctly" duration="4"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useLogin.test.tsx">
+    <testCase name="useLogin Hook should initialize with default values" duration="5"/>
+    <testCase name="useLogin Hook should handle successful login" duration="3"/>
+    <testCase name="useLogin Hook should handle login error" duration="4"/>
+    <testCase name="useLogin Hook should update altForm state" duration="3"/>
+    <testCase name="useLogin Hook should handle successful password reset" duration="8"/>
+    <testCase name="useLogin Hook should handle password mismatch in reset form" duration="83"/>
+    <testCase name="useLogin Hook should handle expired auth timestamp" duration="74"/>
+    <testCase name="useLogin Hook should handle missing URL parameters" duration="94"/>
+    <testCase name="useLogin Hook should handle password reset API error" duration="120"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/NotificationCard.test.tsx">
+    <testCase name="NotificationCard Component renders correctly with positive style" duration="123"/>
+    <testCase name="NotificationCard Component renders correctly with negative style" duration="24"/>
+    <testCase name="NotificationCard Component calls onClick when clicked" duration="10"/>
+    <testCase name="NotificationCard with animation behavior simulates auto-dismiss behavior after duration" duration="3"/>
+    <testCase name="NotificationCard with animation behavior simulates dismiss on click behavior" duration="5"/>
+    <testCase name="NotificationCard with animation behavior simulates cleanup on unmount" duration="1"/>
+    <testCase name="NotificationContainer Component renders all notifications in the container" duration="6"/>
+    <testCase name="NotificationContainer Component sorts notifications by creation time" duration="4"/>
+    <testCase name="NotificationCard Component renders correctly with positive style" duration="7"/>
+    <testCase name="NotificationCard Component renders correctly with negative style" duration="3"/>
+    <testCase name="NotificationCard Component calls onClick when clicked" duration="6"/>
+    <testCase name="showNotification function adds a notification to the store" duration="1"/>
+    <testCase name="showNotification function uses default duration when not provided" duration="1"/>
+    <testCase name="showNotification function ignores duplicate notifications within debounce period" duration="0"/>
+    <testCase name="showNotification function allows different notifications with same positive/negative status" duration="0"/>
+    <testCase name="showNotification function handles invalid parameters" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/api.test.ts">
+    <testCase name="API Service api should be defined" duration="2"/>
+    <testCase name="API Service handleApiError should handle Axios errors" duration="0"/>
+    <testCase name="API Service handleApiError should handle non-Axios errors" duration="2"/>
+    <testCase name="API Service handleApiError should extract error message from response data" duration="1"/>
+    <testCase name="API Service api methods should be defined" duration="2"/>
+    <testCase name="api interceptors request interceptor adds token if exists" duration="0"/>
+    <testCase name="api interceptors request interceptor adds special header for https URLs when headerConfigSpecialPUJOL is true" duration="0"/>
+    <testCase name="api interceptors request interceptor does not add special header when headerConfigSpecialPUJOL is false" duration="0"/>
+    <testCase name="api interceptors request error interceptor logs error and marca como rechazado" duration="0"/>
+    <testCase name="api interceptors request interceptor warns if token not found" duration="1"/>
+    <testCase name="api interceptors success response triggers notification" duration="10"/>
+    <testCase name="api interceptors success response does not trigger notification for non-post methods" duration="1"/>
+    <testCase name="api interceptors error response triggers notification and redirect for 401" duration="0"/>
+    <testCase name="api interceptors error response without message still triggers default message" duration="0"/>
+    <testCase name="api interceptors error response with non-string message converts it to string" duration="0"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Guides.test.tsx">
+    <testCase name="Guides Component renders correctly with guides" duration="44"/>
+    <testCase name="Guides Component shows loading state when loading is true" duration="49"/>
+    <testCase name="Guides Component shows error message when there is an error" duration="5"/>
+    <testCase name="Guides Component shows empty message when there are no guides" duration="4"/>
+    <testCase name="Guides Component calls setParams when search input changes" duration="6"/>
+    <testCase name="Guides Component navigates to guide editor when add button is clicked and under limit" duration="4"/>
+    <testCase name="Guides Component shows confirmation modal when add button is clicked and at limit" duration="25"/>
+    <testCase name="Guides Component navigates to edit page when edit button is clicked" duration="4"/>
+    <testCase name="Guides Component shows confirmation modal when delete button is clicked" duration="6"/>
+    <testCase name="Guides Component shows delete loading state in confirmation modal" duration="6"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/queries.store.test.ts">
+    <testCase name="useQueriesStore debería inicializarse con arrays vacíos y meta null" duration="3"/>
+    <testCase name="useQueriesStore debería actualizar las queries y filteredQueries correctamente" duration="1"/>
+    <testCase name="useQueriesStore debería actualizar los metadatos correctamente" duration="0"/>
+    <testCase name="useQueriesStore debería limpiar las queries, filteredQueries y metadatos" duration="1"/>
+    <testCase name="useQueriesStore debería filtrar queries por módulo" duration="0"/>
+    <testCase name="useQueriesStore debería filtrar queries por nombre de usuario" duration="1"/>
+    <testCase name="useQueriesStore debería restablecer los filtros cuando se pasa un objeto vacío" duration="0"/>
+    <testCase name="useQueriesStore debería filtrar queries con múltiples criterios" duration="1"/>
+    <testCase name="useQueriesStore debería manejar filtros con valores vacíos" duration="0"/>
+    <testCase name="useQueriesStore debería manejar propiedades inexistentes en las queries" duration="1"/>
+    <testCase name="useQueriesStore debería manejar queries con propiedades faltantes" duration="0"/>
+    <testCase name="useQueriesStore debería ser insensible a mayúsculas/minúsculas en los filtros" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/ServiceEditor.test.tsx">
+    <testCase name="ServiceEditor Component renders correctly in create mode" duration="49"/>
+    <testCase name="ServiceEditor Component renders correctly in edit mode and loads service data" duration="74"/>
+    <testCase name="ServiceEditor Component navigates back when back button is clicked" duration="24"/>
+    <testCase name="ServiceEditor Component updates form data when inputs change" duration="13"/>
+    <testCase name="ServiceEditor Component creates a new service when save button is clicked in create mode" duration="93"/>
+    <testCase name="ServiceEditor Component updates an existing service when save button is clicked in edit mode" duration="536"/>
+    <testCase name="ServiceEditor Component handles navigation back to services list" duration="167"/>
+    <testCase name="ServiceEditor Component renders loading state correctly" duration="183"/>
+    <testCase name="ServiceEditor Component handles form input changes correctly" duration="15"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelectCategoryModal.test.tsx">
+    <testCase name="InputSelectCategoryModal Component renders correctly with default props" duration="36"/>
+    <testCase name="InputSelectCategoryModal Component renders correctly with custom label" duration="5"/>
+    <testCase name="InputSelectCategoryModal Component updates category order when drag ends" duration="45"/>
+    <testCase name="InputSelectCategoryModal Component shows confirmation modal when trying to delete a category" duration="71"/>
+    <testCase name="InputSelectCategoryModal Component shows limit reached modal when trying to add a category and limit is reached" duration="44"/>
+    <testCase name="InputSelectCategoryModal Component opens new category modal when add button is clicked and limit is not reached" duration="5"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Login.test.tsx">
+    <testCase name="Login Page renders login form when no URL parameters are present" duration="213"/>
+    <testCase name="Login Page calls login function when form is submitted" duration="48"/>
+    <testCase name="Login Page calls handleForgotPassword when reset password button is clicked" duration="7"/>
+    <testCase name="Login Page renders password reset form when URL parameters are present" duration="5"/>
+    <testCase name="Login Page calls handleAltFormSubmit when password reset form is submitted" duration="45"/>
+    <testCase name="Login Page shows loading state when login is in progress" duration="15"/>
+    <testCase name="Login Page shows error message when login fails" duration="7"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Services.test.tsx">
+    <testCase name="Services Page renders the Services page with all components" duration="42"/>
+    <testCase name="Services Page displays loading indicator when loading is true" duration="3"/>
+    <testCase name="Services Page navigates to service editor when add service button is clicked" duration="14"/>
+    <testCase name="Services Page navigates to service editor with ID when edit button is clicked" duration="81"/>
+    <testCase name="Services Page calls deleteService when delete button is clicked and confirmed" duration="37"/>
+    <testCase name="Services Page handles drag and drop to reorder services" duration="1"/>
+    <testCase name="Services Page prevents default behavior on dragover" duration="1"/>
+    <testCase name="Services Page does not update order when source and target are the same" duration="35"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Queries.test.tsx">
+    <testCase name="Queries Page renders the Queries page with all components" duration="55"/>
+    <testCase name="Queries Page handles search functionality" duration="34"/>
+    <testCase name="Queries Page handles filter changes and application" duration="15"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Payments.test.tsx">
+    <testCase name="Payments renders correctly with default state" duration="108"/>
+    <testCase name="Payments calls fetchPayments when search term changes" duration="25"/>
+    <testCase name="Payments calls fetchPayments when filters are applied" duration="6"/>
+    <testCase name="Payments calls downloadReport when download button is clicked" duration="5"/>
+    <testCase name="Payments calls fetchPayments when page changes" duration="4"/>
+    <testCase name="Payments formats date correctly in table" duration="51"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelectDropdownSimple.test.tsx">
+    <testCase name="InputSelectDropdownSimple renderiza correctamente con valor seleccionado" duration="21"/>
+    <testCase name="InputSelectDropdownSimple renderiza correctamente con placeholder cuando no hay valor" duration="6">
+      <failure message="TestingLibraryElementError: Unable to find an element with the text: TODOS. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible."><![CDATA[TestingLibraryElementError: Unable to find an element with the text: TODOS. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="input-select-dropdown-simple"
+    >
+      <button
+        aria-expanded="false"
+        aria-label="Abrir selector"
+        class="dropdown-simple-trigger "
+        type="button"
+      >
+        Todos
+        <div
+          class=""
+          data-testid="arrow-icon"
+        />
+      </button>
+    </div>
+  </div>
+</body>
+    at Object.getElementError (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/@testing-library/dom/dist/config.js:37:19)
+    at /Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+    at /Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+    at /Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+    at Object.<anonymous> (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelectDropdownSimple.test.tsx:47:19)
+    at Promise.then.completed (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/run.js:121:9)
+    at run (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/node_modules/jest-runner/build/testWorker.js:106:12)]]></failure>
+    </testCase>
+    <testCase name="InputSelectDropdownSimple renderiza correctamente con placeholder personalizado" duration="2"/>
+    <testCase name="InputSelectDropdownSimple renderiza correctamente con etiqueta" duration="3"/>
+    <testCase name="InputSelectDropdownSimple abre el menú desplegable al hacer clic en el botón" duration="36"/>
+    <testCase name="InputSelectDropdownSimple cierra el menú desplegable al seleccionar una opción" duration="80"/>
+    <testCase name="InputSelectDropdownSimple cierra el menú desplegable al hacer clic fuera del componente" duration="8"/>
+    <testCase name="InputSelectDropdownSimple rota el ícono cuando el menú está abierto" duration="13"/>
+    <testCase name="InputSelectDropdownSimple muestra el valor directamente cuando no coincide con ninguna opción" duration="3"/>
+    <testCase name="InputSelectDropdownSimple limpia el evento al desmontar el componente" duration="10"/>
+    <testCase name="InputSelectDropdownSimple mantiene el estado abierto/cerrado correctamente" duration="5"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Table.test.tsx">
+    <testCase name="Table Component renders table with headers" duration="25"/>
+    <testCase name="Table Component renders table with data" duration="7"/>
+    <testCase name="Table Component shows loading spinner when loading is true" duration="3"/>
+    <testCase name="Table Component shows no results message when data is empty" duration="5"/>
+    <testCase name="Table Component applies custom renderers to cells" duration="18"/>
+    <testCase name="Table Component calls onCellClick when a modal cell is clicked" duration="6"/>
+    <testCase name="Table Component does not call onCellClick for non-modal cells" duration="2"/>
+    <testCase name="Table Component renders pagination controls when pagination props are provided" duration="6"/>
+    <testCase name="Table Component calls onChange when pagination buttons are clicked" duration="6"/>
+    <testCase name="Table Component disables previous button on first page" duration="6"/>
+    <testCase name="Table Component disables next button on last page" duration="9"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/notifications.store.test.ts">
+    <testCase name="Notification Store should initialize with empty notifications array" duration="4"/>
+    <testCase name="Notification Store should add a notification correctly" duration="1"/>
+    <testCase name="Notification Store should add multiple notifications correctly" duration="1"/>
+    <testCase name="Notification Store should add notification without optional duration" duration="0"/>
+    <testCase name="Notification Store should remove a notification by id" duration="1"/>
+    <testCase name="Notification Store should not remove notifications with non-matching id" duration="0"/>
+    <testCase name="Notification Store should clear all notifications" duration="1"/>
+    <testCase name="Notification Store should preserve existing notifications when adding a new one" duration="20"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useUser.test.tsx">
+    <testCase name="useUserData Hook should initialize with default values and fetch users on mount" duration="23"/>
+    <testCase name="useUserData Hook should handle API error when fetching users" duration="27"/>
+    <testCase name="useUserData Hook should fetch users with all filter parameters" duration="6"/>
+    <testCase name="useUserData Hook should update user params and trigger fetch" duration="10"/>
+    <testCase name="useUserData Hook should update user status" duration="10"/>
+    <testCase name="useUserData Hook should handle error when updating user status" duration="9"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelectModalSimple.test.tsx">
+    <testCase name="InputSelectModalSimple Component renders correctly with label and placeholder" duration="25"/>
+    <testCase name="InputSelectModalSimple Component renders correctly with a selected value" duration="2"/>
+    <testCase name="InputSelectModalSimple Component opens modal when trigger is clicked" duration="7"/>
+    <testCase name="InputSelectModalSimple Component closes modal when an option is selected" duration="2"/>
+    <testCase name="InputSelectModalSimple Component closes modal when close button is clicked" duration="4"/>
+    <testCase name="InputSelectModalSimple Component works without a label" duration="2"/>
+    <testCase name="InputSelectModalSimple Component uses default values for placeholder and titleOfModal when not provided" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/ConfirmationModal.test.tsx">
+    <testCase name="ConfirmationModal Component showConfirmationModal crea un contenedor y renderiza el modal" duration="13"/>
+    <testCase name="ConfirmationModal Component showConfirmationModal maneja correctamente el onCancel" duration="1"/>
+    <testCase name="ConfirmationModal Component showConfirmationModal maneja correctamente cuando onAction no está definido" duration="1"/>
+    <testCase name="ConfirmationModal Component showConfirmationModal con showCancelButton=false no muestra el botón de cancelar" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useDownloadReport.test.tsx">
+    <testCase name="useDownloadReport Hook should initialize with default values" duration="22"/>
+    <testCase name="useDownloadReport Hook should call API with correct parameters for queries module" duration="8"/>
+    <testCase name="useDownloadReport Hook should call API with correct parameters for other modules with filters" duration="7"/>
+    <testCase name="useDownloadReport Hook should handle API errors correctly" duration="4"/>
+    <testCase name="useDownloadReport Hook should handle non-Error objects correctly" duration="3"/>
+    <testCase name="useDownloadReport Hook should create a downloadable link and revoke it after download" duration="4"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputPassword.test.tsx">
+    <testCase name="InputPassword Component renders with label" duration="10"/>
+    <testCase name="InputPassword Component toggles password visibility when button is clicked" duration="75"/>
+    <testCase name="InputPassword Component shows reset password button when resetPass is true" duration="4"/>
+    <testCase name="InputPassword Component does not show reset password button when resetPass is false" duration="2"/>
+    <testCase name="InputPassword Component calls onChange when input value changes" duration="1"/>
+    <testCase name="InputPassword Component shows error message when provided" duration="3"/>
+    <testCase name="InputPassword Component calls onResetClick when reset password button is clicked" duration="2"/>
+    <testCase name="InputPassword Component calls handleForgotPassword when reset button is clicked and no onResetClick provided" duration="3"/>
+    <testCase name="InputPassword Component disables reset button when loading is true" duration="4"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/GuidesEditor.test.tsx">
+    <testCase name="GuidesEditor renders correctly with default state" duration="101"/>
+    <testCase name="GuidesEditor muestra mensaje de carga cuando loading es true" duration="15"/>
+    <testCase name="GuidesEditor muestra mensaje de error cuando hay un error" duration="10"/>
+    <testCase name="GuidesEditor muestra título de edición cuando isEditing es true" duration="6"/>
+    <testCase name="GuidesEditor calls handleBack when back button is clicked" duration="20"/>
+    <testCase name="GuidesEditor calls handleSubmit when save button is clicked" duration="12"/>
+    <testCase name="GuidesEditor calls handleFieldChange when text input changes" duration="38"/>
+    <testCase name="GuidesEditor calls handleFieldChange when category select changes" duration="5"/>
+    <testCase name="GuidesEditor calls handleFileDelete when delete button is clicked" duration="14"/>
+    <testCase name="GuidesEditor muestra errores de validación cuando los campos son tocados y están vacíos" duration="7"/>
+    <testCase name="GuidesEditor muestra error en el campo de categoría cuando es tocado y está vacío" duration="17"/>
+    <testCase name="GuidesEditor muestra error en el campo de descripción cuando es tocado y está vacío" duration="20"/>
+    <testCase name="GuidesEditor muestra error en la imagen principal cuando se elimina" duration="18"/>
+    <testCase name="GuidesEditor deshabilita el botón guardar cuando el formulario no es válido" duration="34"/>
+    <testCase name="GuidesEditor muestra campo secundario cuando se hace clic en &quot;Agregar Foto&quot;" duration="8"/>
+    <testCase name="GuidesEditor muestra campo terciario cuando se hace clic en &quot;Agregar Video&quot;" duration="7"/>
+    <testCase name="GuidesEditor maneja correctamente la subida de archivos en el campo principal" duration="5"/>
+    <testCase name="GuidesEditor maneja correctamente la subida de archivos en el campo secundario" duration="12"/>
+    <testCase name="GuidesEditor maneja correctamente la subida de archivos en el campo terciario" duration="3"/>
+    <testCase name="GuidesEditor elimina correctamente el archivo secundario" duration="16"/>
+    <testCase name="GuidesEditor elimina correctamente el archivo terciario" duration="3"/>
+    <testCase name="GuidesEditor habilita el botón guardar cuando el formulario es válido" duration="2"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useInputSelectModal.test.tsx">
+    <testCase name="useInputSelectModal Hook should initialize with default values" duration="9"/>
+    <testCase name="useInputSelectModal Hook should initialize with custom placeholder" duration="1"/>
+    <testCase name="useInputSelectModal Hook should show selected option label when value is set" duration="0"/>
+    <testCase name="useInputSelectModal Hook should open and close modal" duration="2"/>
+    <testCase name="useInputSelectModal Hook should handle option selection" duration="2"/>
+    <testCase name="useInputSelectModal Hook should handle option deletion" duration="5"/>
+    <testCase name="useInputSelectModal Hook should handle drag and drop reordering" duration="1"/>
+    <testCase name="useInputSelectModal Hook should update items when options change" duration="14"/>
+    <testCase name="useInputSelectModal Hook should not call onReorder if drag and drop indices are invalid" duration="2"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/ServiceCard.test.tsx">
+    <testCase name="ServiceCard Component renders correctly with all props" duration="56"/>
+    <testCase name="ServiceCard Component renders correctly without optional props" duration="9"/>
+    <testCase name="ServiceCard Component applies highlight class when isHighlighted is true" duration="4"/>
+    <testCase name="ServiceCard Component calls onEdit when edit button is clicked" duration="11"/>
+    <testCase name="ServiceCard Component calls onDelete when delete button is clicked" duration="2"/>
+    <testCase name="ServiceCard Component calls onDragStart when dragging starts" duration="4"/>
+    <testCase name="ServiceCard Component handles image load error correctly" duration="6"/>
+    <testCase name="ServiceCard Component does not replace image with fallback if already using fallback" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelectModal.test.tsx">
+    <testCase name="InputSelectModal Component renders correctly with default props" duration="24"/>
+    <testCase name="InputSelectModal Component renders correctly with custom props" duration="3"/>
+    <testCase name="InputSelectModal Component displays selected option label when value is provided" duration="1"/>
+    <testCase name="InputSelectModal Component opens modal when trigger is clicked" duration="11"/>
+    <testCase name="InputSelectModal Component closes modal when an option is selected" duration="7"/>
+    <testCase name="InputSelectModal Component closes modal when clicking outside" duration="7"/>
+    <testCase name="InputSelectModal Component handles empty options array gracefully" duration="3"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/ProtectedLayout.test.tsx">
+    <testCase name="ProtectedLayout Component redirects to login when no token is present" duration="28"/>
+    <testCase name="ProtectedLayout Component renders layout with sidebar and outlet when token is present" duration="11"/>
+    <testCase name="ProtectedLayout Component shows loading state while checking authentication" duration="4"/>
+    <testCase name="ProtectedLayout Component checks localStorage for token on mount" duration="7"/>
+    <testCase name="ProtectedLayout Component applies correct CSS classes to layout elements" duration="11"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputFile.test.tsx">
+    <testCase name="InputFile renders correctly with default props" duration="92"/>
+    <testCase name="InputFile renders correctly for video upload" duration="9"/>
+    <testCase name="InputFile renders correctly for both image and video upload" duration="8"/>
+    <testCase name="InputFile displays image preview when value is provided" duration="9"/>
+    <testCase name="InputFile displays placeholder image when provided" duration="12"/>
+    <testCase name="InputFile calls onChange when a file is selected" duration="4"/>
+    <testCase name="InputFile calls onDelete when delete button is clicked" duration="10"/>
+    <testCase name="InputFile shows error message when error prop is true" duration="10"/>
+    <testCase name="InputFile shows video player for local videos" duration="44"/>
+    <testCase name="InputFile shows video icon for external videos" duration="71"/>
+    <testCase name="InputFile handles file selection correctly" duration="24"/>
+    <testCase name="InputFile handles file size validation correctly for images" duration="11"/>
+    <testCase name="InputFile handles file size validation correctly for videos" duration="335"/>
+    <testCase name="InputFile handles file format validation correctly" duration="186"/>
+    <testCase name="InputFile handles keyboard navigation correctly" duration="192"/>
+    <testCase name="InputFile handles image load errors correctly" duration="73"/>
+    <testCase name="InputFile tests keyboard accessibility in the component" duration="91"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/usePasswordValidation.test.tsx">
+    <testCase name="usePasswordValidation Hook should initialize with all validations as false for empty password" duration="33"/>
+    <testCase name="usePasswordValidation Hook should validate minimum length correctly" duration="16"/>
+    <testCase name="usePasswordValidation Hook should validate uppercase correctly" duration="13"/>
+    <testCase name="usePasswordValidation Hook should validate special characters correctly" duration="17"/>
+    <testCase name="usePasswordValidation Hook should validate password as valid when all criteria are met" duration="200"/>
+    <testCase name="usePasswordValidation Hook should update validation when password changes" duration="7"/>
+    <testCase name="usePasswordValidation Hook should set appropriate error message for invalid password" duration="5"/>
+    <testCase name="usePasswordValidation Hook should validate password with validate function" duration="6"/>
+    <testCase name="usePasswordValidation Hook should recognize various special characters" duration="72"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Filters.test.tsx">
+    <testCase name="Filters renders correctly with all filters" duration="142"/>
+    <testCase name="Filters calls onChange when a filter value changes" duration="12"/>
+    <testCase name="Filters calls onApply when filter button is clicked" duration="8"/>
+    <testCase name="Filters calls onDownload when download button is clicked" duration="12"/>
+    <testCase name="Filters disables download button when isDownloading is true" duration="4"/>
+    <testCase name="Filters renders custom filter element when provided" duration="4"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/endPoints.test.ts">
+    <testCase name="endPoints API_BASE_URL should be a valid URL" duration="6"/>
+    <testCase name="endPoints Static URLs AUTH endpoints should be correctly defined" duration="0"/>
+    <testCase name="endPoints Static URLs SERVICES endpoints should be correctly defined" duration="0"/>
+    <testCase name="endPoints Static URLs GUIDES.LIST endpoint should be correctly defined" duration="1"/>
+    <testCase name="endPoints Static URLs CATEGORIES endpoints should be correctly defined" duration="0"/>
+    <testCase name="endPoints Static URLs QUERIES endpoints should be correctly defined" duration="0"/>
+    <testCase name="endPoints URL generator functions GUIDES.DETAIL should generate correct URL with numeric ID" duration="0"/>
+    <testCase name="endPoints URL generator functions GUIDES.DETAIL should generate correct URL with string ID" duration="0"/>
+    <testCase name="endPoints URL generator functions IMAGES.FILE should generate correct URL with key" duration="1"/>
+    <testCase name="endPoints URL generator functions USERS.UPDATE should generate correct URL with ID" duration="0"/>
+    <testCase name="endPoints URL generator functions REPORTS.DOWNLOAD should generate correct URL with module" duration="0"/>
+    <testCase name="endPoints All ENDPOINTS properties should be defined" duration="48"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/auth.test.ts">
+    <testCase name="Auth Store should initialize with null user and token from localStorage" duration="28"/>
+    <testCase name="Auth Store should set user and update authentication state" duration="2"/>
+    <testCase name="Auth Store should set token and update localStorage and authentication state" duration="3"/>
+    <testCase name="Auth Store should clear token when setting it to null" duration="0"/>
+    <testCase name="Auth Store should logout and clear all state and localStorage" duration="9"/>
+    <testCase name="Auth Store should initialize with isAuthenticated false when no token exists" duration="4"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/SideBar.test.tsx">
+    <testCase name="Sidebar Component renders correctly with logo and title" duration="47"/>
+    <testCase name="Sidebar Component renders all menu items" duration="5"/>
+    <testCase name="Sidebar Component highlights the active menu item based on current path" duration="3"/>
+    <testCase name="Sidebar Component navigates to the correct route when a menu item is clicked" duration="2"/>
+    <testCase name="Sidebar Component logs out when logout button is clicked" duration="6"/>
+    <testCase name="Sidebar Component renders logout section correctly" duration="3"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/NewCategoryModal.test.tsx">
+    <testCase name="NewCategoryModal Component renders nothing when isOpen is false" duration="57"/>
+    <testCase name="NewCategoryModal Component renders correctly when isOpen is true" duration="121"/>
+    <testCase name="NewCategoryModal Component calls onNameChange when input value changes" duration="53"/>
+    <testCase name="NewCategoryModal Component calls onAdd when add button is clicked" duration="52"/>
+    <testCase name="NewCategoryModal Component disables add button when loading is true" duration="63"/>
+    <testCase name="NewCategoryModal Component shows error message when error is provided" duration="71"/>
+    <testCase name="NewCategoryModal Component applies correct className to modal" duration="52"/>
+    <testCase name="NewCategoryModal Component calls onClose when close button is clicked" duration="55"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useNewCategoryModal.test.tsx">
+    <testCase name="useNewCategoryModal Hook should initialize with default values" duration="44"/>
+    <testCase name="useNewCategoryModal Hook should open and close modal" duration="10"/>
+    <testCase name="useNewCategoryModal Hook should update name state" duration="297"/>
+    <testCase name="useNewCategoryModal Hook should show error when trying to add with empty name" duration="46"/>
+    <testCase name="useNewCategoryModal Hook should add category successfully" duration="20"/>
+    <testCase name="useNewCategoryModal Hook should handle error when adding category" duration="10"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useInputPassword.test.tsx">
+    <testCase name="useInputPassword Hook should initialize with default values" duration="41"/>
+    <testCase name="useInputPassword Hook should set loading to true when handleForgotPassword is called" duration="6"/>
+    <testCase name="useInputPassword Hook should handle successful password recovery request" duration="9"/>
+    <testCase name="useInputPassword Hook should handle error in password recovery request" duration="3"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/FatButton.test.tsx">
+    <testCase name="FatButton Component renders correctly with default props" duration="197"/>
+    <testCase name="FatButton Component renders correctly with custom props" duration="62"/>
+    <testCase name="FatButton Component calls onClick when clicked" duration="58"/>
+    <testCase name="FatButton Component does not call onClick when disabled" duration="154"/>
+    <testCase name="FatButton Component renders with reset type when specified" duration="29"/>
+    <testCase name="FatButton Component does not apply style object when no custom colors are provided" duration="20"/>
+    <testCase name="FatButton Component renders icon correctly when provided" duration="8"/>
+    <testCase name="FatButton Component renders without icon when not provided" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelectDropdown.test.tsx">
+    <testCase name="InputSelectDropdown renders correctly with default props" duration="131"/>
+    <testCase name="InputSelectDropdown renders with custom label and placeholder" duration="2"/>
+    <testCase name="InputSelectDropdown displays selected option label when value is provided" duration="0"/>
+    <testCase name="InputSelectDropdown opens dropdown when trigger is clicked" duration="144"/>
+    <testCase name="InputSelectDropdown calls onChange when an option is selected" duration="8"/>
+    <testCase name="InputSelectDropdown closes dropdown when clicking outside" duration="6"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Modal.test.tsx">
+    <testCase name="Modal Component renders nothing when isOpen is false" duration="26"/>
+    <testCase name="Modal Component renders correctly when isOpen is true" duration="13"/>
+    <testCase name="Modal Component calls onClose when close button is clicked" duration="6"/>
+    <testCase name="Modal Component calls onClose when overlay is clicked" duration="5"/>
+    <testCase name="Modal Component does not call onClose when modal content is clicked" duration="4"/>
+    <testCase name="Modal Component applies custom className when provided" duration="73"/>
+    <testCase name="Modal Component does not render header when title is empty" duration="2"/>
+    <testCase name="Modal Component renders children correctly" duration="176"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/TitleSearch.test.tsx">
+    <testCase name="TitleSearch Component renders with label" duration="6"/>
+    <testCase name="TitleSearch Component renders with subtitle" duration="2"/>
+    <testCase name="TitleSearch Component renders search input when onSearch is provided" duration="2"/>
+    <testCase name="TitleSearch Component calls onSearch when search input changes" duration="1"/>
+    <testCase name="TitleSearch Component renders call to action button when provided" duration="3"/>
+    <testCase name="TitleSearch Component does not render search input when callToAction is provided" duration="3"/>
+    <testCase name="TitleSearch Component renders back button when progressScreen is true" duration="8"/>
+    <testCase name="TitleSearch Component calls onBack when back button is clicked" duration="1"/>
+    <testCase name="TitleSearch Component does not render back button when progressScreen is false" duration="2"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useMailValidation.test.tsx">
+    <testCase name="useMailValidation Hook should initialize with no error for empty value" duration="74"/>
+    <testCase name="useMailValidation Hook should validate valid email correctly" duration="4"/>
+    <testCase name="useMailValidation Hook should validate invalid email correctly" duration="1"/>
+    <testCase name="useMailValidation Hook should update validation when value changes" duration="2"/>
+    <testCase name="useMailValidation Hook should validate email with validate function" duration="35"/>
+    <testCase name="useMailValidation Hook should accept various valid email formats" duration="14"/>
+    <testCase name="useMailValidation Hook should reject simple text as invalid email" duration="8"/>
+    <testCase name="useMailValidation Hook should reject incomplete domain as invalid email" duration="3"/>
+    <testCase name="useMailValidation Hook should reject missing username as invalid email" duration="3"/>
+    <testCase name="useMailValidation Hook should reject missing TLD as invalid email" duration="5"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/VehiclesModal.test.tsx">
+    <testCase name="VehiclesModal Component renders nothing when isOpen is false" duration="336"/>
+    <testCase name="VehiclesModal Component renders correctly with vehicles data" duration="146"/>
+    <testCase name="VehiclesModal Component formats dates correctly" duration="63"/>
+    <testCase name="VehiclesModal Component shows message when there are no vehicles" duration="731"/>
+    <testCase name="VehiclesModal Component renders table headers correctly" duration="36"/>
+    <testCase name="VehiclesModal Component calls onClose when close button is clicked" duration="44"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/api_service.test.ts">
+    <testCase name="API Service Additional Tests api module should be defined" duration="11"/>
+    <testCase name="API Service Additional Tests handleApiError Additional Tests should handle error with no response" duration="1"/>
+    <testCase name="API Service Additional Tests handleApiError Additional Tests should handle error with empty response data" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Router.test.tsx">
+    <testCase name="Router Configuration debería tener la ruta de login configurada correctamente" duration="4"/>
+    <testCase name="Router Configuration debería tener la ruta principal configurada correctamente" duration="1"/>
+    <testCase name="Router Configuration debería tener todas las rutas secundarias configuradas" duration="1"/>
+    <testCase name="Router Configuration debería tener una ruta comodín para redireccionar rutas no encontradas" duration="0"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSelect.test.tsx">
+    <testCase name="InputSelect Component renders with label" duration="37"/>
+    <testCase name="InputSelect Component renders default disabled option" duration="2"/>
+    <testCase name="InputSelect Component renders string options correctly" duration="1"/>
+    <testCase name="InputSelect Component renders object options correctly" duration="2"/>
+    <testCase name="InputSelect Component calls onChange when option is selected" duration="29"/>
+    <testCase name="InputSelect Component selects the correct option based on value prop" duration="7"/>
+    <testCase name="InputSelect Component selects the correct option with object options" duration="4"/>
+    <testCase name="InputSelect Component has the correct CSS classes" duration="6"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputText.test.tsx">
+    <testCase name="InputText Component renders with label" duration="64"/>
+    <testCase name="InputText Component calls onChange when input value changes" duration="53"/>
+    <testCase name="InputText Component renders with placeholder" duration="2"/>
+    <testCase name="InputText Component shows error message when provided" duration="1"/>
+    <testCase name="InputText Component validates email when validation is set to mail and email is invalid" duration="3"/>
+    <testCase name="InputText Component does not show error when validation is set to mail and email is valid" duration="2"/>
+    <testCase name="InputText Component renders textarea when heightSize is provided" duration="19"/>
+    <testCase name="InputText Component applies error class when error is present" duration="4"/>
+    <testCase name="InputText Component applies error class when errorMessage is provided" duration="75"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/PageTransition.test.tsx">
+    <testCase name="PageTransition Component renders children correctly" duration="53"/>
+    <testCase name="PageTransition Component passes correct animation props to motion.div" duration="37"/>
+    <testCase name="PageTransition Component renders multiple children correctly" duration="2"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Loading.test.tsx">
+    <testCase name="Loading Component renders correctly with default props" duration="99"/>
+    <testCase name="Loading Component renders correctly with small size" duration="5"/>
+    <testCase name="Loading Component renders correctly with large size" duration="1"/>
+    <testCase name="Loading Component renders correctly with custom color" duration="10"/>
+    <testCase name="Loading Component applies both custom size and color" duration="7"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/users.store.test.ts">
+    <testCase name="useUsersStore debería inicializarse con un array vacío de usuarios y meta null" duration="5"/>
+    <testCase name="useUsersStore debería actualizar los usuarios correctamente" duration="0"/>
+    <testCase name="useUsersStore debería actualizar los metadatos correctamente" duration="1"/>
+    <testCase name="useUsersStore debería limpiar los usuarios y metadatos" duration="86"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/NotificationTest.test.tsx">
+    <testCase name="NotificationTest Component debería renderizar dos botones" duration="289"/>
+    <testCase name="NotificationTest Component debería llamar a showNotification con parámetros de éxito al hacer clic en el botón de éxito" duration="57"/>
+    <testCase name="NotificationTest Component debería llamar a showNotification con parámetros de error al hacer clic en el botón de error" duration="3"/>
+    <testCase name="NotificationTest Component los botones deberían tener los estilos correctos" duration="252"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSwitch.test.tsx">
+    <testCase name="SwitchInput Component renders correctly when inactive" duration="59"/>
+    <testCase name="SwitchInput Component renders correctly when active" duration="4"/>
+    <testCase name="SwitchInput Component calls onChange with correct value when clicked and inactive" duration="9"/>
+    <testCase name="SwitchInput Component calls onChange with correct value when clicked and active" duration="4"/>
+    <testCase name="SwitchInput Component does not call onChange when disabled" duration="2"/>
+    <testCase name="SwitchInput Component has disabled class when disabled" duration="8"/>
+    <testCase name="SwitchInput Component has correct tabIndex when enabled" duration="2"/>
+    <testCase name="SwitchInput Component has correct tabIndex when disabled" duration="1"/>
+    <testCase name="SwitchInput Component contains the switch ball element" duration="22"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputSearch.test.tsx">
+    <testCase name="InputSearch Component renders correctly with default placeholder" duration="19"/>
+    <testCase name="InputSearch Component renders correctly with custom placeholder" duration="2"/>
+    <testCase name="InputSearch Component calls onChange when input value changes" duration="5"/>
+    <testCase name="InputSearch Component handles multiple input changes correctly" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/payments.store.test.ts">
+    <testCase name="usePaymentsStore debería inicializarse con un array vacío de pagos y meta null" duration="1"/>
+    <testCase name="usePaymentsStore debería actualizar los pagos correctamente" duration="0"/>
+    <testCase name="usePaymentsStore debería actualizar los metadatos correctamente" duration="1"/>
+    <testCase name="usePaymentsStore debería limpiar los pagos y metadatos" duration="0"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputCheckBox.test.tsx">
+    <testCase name="InputCheckBox Component renders with label" duration="16"/>
+    <testCase name="InputCheckBox Component renders checkbox with correct checked state when unchecked" duration="20"/>
+    <testCase name="InputCheckBox Component renders checkbox with correct checked state when checked" duration="7"/>
+    <testCase name="InputCheckBox Component calls onChange with correct value when checkbox is clicked" duration="7"/>
+    <testCase name="InputCheckBox Component calls onChange with correct value when checkbox is unclicked" duration="3"/>
+    <testCase name="InputCheckBox Component has the correct CSS classes" duration="5"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/InputDate.test.tsx">
+    <testCase name="InputDate Component renders with label" duration="55"/>
+    <testCase name="InputDate Component renders DatePicker component" duration="1"/>
+    <testCase name="InputDate Component initializes with correct date when value is provided" duration="45"/>
+    <testCase name="InputDate Component calls onChange with correct value when date changes" duration="7"/>
+    <testCase name="InputDate Component calls onChange with empty string when date is cleared" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/services.store.test.ts">
+    <testCase name="useServicesStore debería inicializarse con un array vacío de servicios" duration="1"/>
+    <testCase name="useServicesStore debería actualizar los servicios correctamente con un array" duration="0"/>
+    <testCase name="useServicesStore debería actualizar los servicios correctamente con una función" duration="3"/>
+    <testCase name="useServicesStore debería limpiar los servicios" duration="0"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/guides.store.test.ts">
+    <testCase name="useGuidesStore debería inicializarse con un array vacío de guías y meta null" duration="5"/>
+    <testCase name="useGuidesStore debería actualizar las guías correctamente" duration="0"/>
+    <testCase name="useGuidesStore debería actualizar los metadatos correctamente" duration="0"/>
+    <testCase name="useGuidesStore debería limpiar las guías y metadatos" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Main.test.tsx">
+    <testCase name="Main Component debería renderizar la aplicación correctamente" duration="91"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/VerifyIcon.test.tsx">
+    <testCase name="VerifyIcon Component renders verified state correctly" duration="17"/>
+    <testCase name="VerifyIcon Component renders unverified state correctly" duration="1"/>
+    <testCase name="VerifyIcon Component changes appearance based on verified prop" duration="4"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useStore.test.ts">
+    <testCase name="useStore debería inicializarse con count en 0" duration="34"/>
+    <testCase name="useStore debería incrementar el contador correctamente" duration="1"/>
+    <testCase name="useStore debería decrementar el contador correctamente" duration="0"/>
+    <testCase name="useStore debería manejar múltiples operaciones secuenciales" duration="0"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/useGuides.test.tsx">
+    <testCase name="useGuides Hook should initialize with default values" duration="59"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Button.test.tsx">
+    <testCase name="Button Component renders with label" duration="83"/>
+    <testCase name="Button Component calls onClick when clicked" duration="5"/>
+    <testCase name="Button Component is disabled when disabled prop is true" duration="4"/>
+    <testCase name="Button Component applies custom className" duration="6"/>
+    <testCase name="Button Component has correct button type" duration="4"/>
+    <testCase name="Button Component has default button type when not specified" duration="2"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/Icon.test.tsx">
+    <testCase name="Icon Component debería renderizar el ícono proporcionado" duration="50"/>
+    <testCase name="Icon Component debería pasar las props adicionales al ícono" duration="19"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/App.test.tsx">
+    <testCase name="App Component renders correctly with Outlet" duration="17"/>
+    <testCase name="App Component has the correct CSS classes" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/IconButton.test.tsx">
+    <testCase name="IconButton Component renders the component" duration="21"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/GuideCard.test.tsx">
+    <testCase name="GuideCard Component renders correctly with all props" duration="211"/>
+    <testCase name="GuideCard Component renders correctly without description" duration="3"/>
+    <testCase name="GuideCard Component calls onEdit when edit button is clicked" duration="14"/>
+    <testCase name="GuideCard Component calls onDelete when delete button is clicked" duration="1"/>
+    <testCase name="GuideCard Component does not throw error when onEdit is not provided" duration="4"/>
+    <testCase name="GuideCard Component does not throw error when onDelete is not provided" duration="1"/>
+  </file>
+  <file path="/Users/andresrodriguez/Desktop/Andres/Proyectos/EquirentAppAdminFrontend/tests/OptionCard.test.tsx">
+    <testCase name="OptionCard Component debería renderizar con las props correctas" duration="10"/>
+    <testCase name="OptionCard Component debería aplicar la clase active cuando isActive es true" duration="1"/>
+    <testCase name="OptionCard Component no debería aplicar la clase active cuando isActive es false" duration="1"/>
+    <testCase name="OptionCard Component debería llamar a onClick cuando se hace clic" duration="2"/>
+    <testCase name="OptionCard Component debería renderizar el ícono de flecha" duration="2"/>
+  </file>
+</testExecutions>

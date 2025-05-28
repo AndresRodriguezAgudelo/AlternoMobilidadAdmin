@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CancelIcon from '@mui/icons-material/Cancel';
 import './styled.css';
 
@@ -17,6 +19,8 @@ interface TableHeader {
   key: string;
   label: string;
   isModal?: boolean;
+  sortable?: boolean;
+  sortKey?: string;
 }
 
 type CustomRenderer = (value: any, row?: any) => React.ReactNode;
@@ -35,6 +39,9 @@ interface TableProps {
   onCellClick?: (row: any, column: string) => void;
   customRenderers?: Record<string, CustomRenderer>;
   pagination?: PaginationProps;
+  onSort?: (key: string, order: 'ASC' | 'DESC') => void;
+  currentSortKey?: string;
+  currentSortOrder?: 'ASC' | 'DESC';
 }
 
 export const Table = ({ 
@@ -43,7 +50,10 @@ export const Table = ({
   loading = false,
   onCellClick,
   customRenderers = {},
-  pagination
+  pagination,
+  onSort,
+  currentSortKey = 'createdAt',
+  currentSortOrder = 'DESC'
 }: TableProps) => {
   const renderPagination = () => {
     if (!pagination) return null;
@@ -92,7 +102,26 @@ export const Table = ({
           <TableHead>
             <TableRow>
               {headers.map((header) => (
-                <TableCell key={header.key}>{header.label}</TableCell>
+                <TableCell 
+                  key={header.key} 
+                  sx={{ fontWeight: 'bold' }}
+                  onClick={() => {
+                    if (header.sortable && onSort && header.sortKey) {
+                      const newOrder = currentSortKey === header.sortKey && currentSortOrder === 'ASC' ? 'DESC' : 'ASC';
+                      onSort(header.sortKey, newOrder);
+                    }
+                  }}
+                  className={header.sortable ? 'sortable-header' : ''}
+                >
+                  <div className="header-content">
+                    {header.label}
+                    {header.sortable && header.sortKey === currentSortKey && (
+                      <span className="sort-icon">
+                        {currentSortOrder === 'ASC' ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                      </span>
+                    )}
+                  </div>
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>

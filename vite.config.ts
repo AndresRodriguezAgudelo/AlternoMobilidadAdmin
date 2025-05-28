@@ -7,10 +7,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 3002,
     proxy: {
       '/api/sign/v1/files/file': {
-        target: 'https://back-app-equisoft-production.up.railway.app',
+        target: 'https://equirentappbackend-dev-f9e9d0geh6dgdkeu.eastus2-01.azurewebsites.net',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api\/sign\/v1\/files\/file/, '/api/sign/v1/files/file')
       }

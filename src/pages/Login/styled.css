@@ -84,6 +84,12 @@
   font-size: 0.875rem;
 } 
 
+.spacer-reset-password {
+  height: 0rem;
+  background-color: #DC2626;
+}
+
+
 .forgot-password-link {
   color: var(--blue-light);
   text-decoration: underline;

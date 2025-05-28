@@ -1,22 +1,25 @@
 import { useState, useEffect } from 'react';
 import { api } from '../../../services/api';
 import { ENDPOINTS } from '../../../services/endPoints';
-import { useUsersStore } from '../../../store/users';
-import { UserParams, UserResponse } from '../../../types/user';
+
+import { User, UserParams, UserResponse } from '../../../types/user';
 
 export const useUserData = () => {
-  const { users: storedUsers, setUsers, meta, setMeta } = useUsersStore();
+  const [users, setUsers] = useState<User[]>([]);
+  const [meta, setMeta] = useState<UserResponse['meta'] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
+  const [sortKey, setSortKey] = useState<string>('createdAt');
   const [params, setParams] = useState<UserParams>({
     page: 1,
-    take: 10,
+    take: 50,
     order: 'ASC'
   });
 
   const fetchUsers = async (
     page: number = 1,
-    take: number = 10,
+    take: number = 50,
     order: 'ASC' | 'DESC' = 'ASC',
     search?: string,
     startDate?: string,
@@ -58,15 +61,6 @@ export const useUserData = () => {
   };
 
   useEffect(() => {
-    if (storedUsers.length > 0 && 
-        params.page === 1 && 
-        params.take === 10 && 
-        params.order === 'ASC' && 
-        !params.search) {
-      setLoading(false);
-      return;
-    }
-
     fetchUsers(
       params.page,
       params.take,
@@ -84,7 +78,7 @@ export const useUserData = () => {
       await api.patch(ENDPOINTS.USERS.UPDATE(userId), { status: newStatus });
       
       // Actualizar el estado local
-      const updatedUsers = storedUsers.map(user => 
+      const updatedUsers = users.map(user => 
         user.id === userId ? { ...user, status: newStatus } : user
       );
       setUsers(updatedUsers);
@@ -99,14 +93,32 @@ export const useUserData = () => {
     }
   };
 
+  const handleSort = (key: string, order: 'ASC' | 'DESC') => {
+    setSortKey(key);
+    setSortOrder(order);
+    fetchUsers(
+      params.page,
+      params.take,
+      order,
+      params.search,
+      params.startDate,
+      params.endDate,
+      params.totalVehicles,
+      params.status
+    );
+  };
+
   return {
-    users: storedUsers,
+    users,
     loading,
     error,
     meta,
     fetchUsers,
     setParams,
-    updateUserStatus
+    updateUserStatus,
+    handleSort,
+    sortKey,
+    sortOrder
   };
 };
 
@@ -115,6 +127,6 @@ export const userTableHeaders = [
   { key: 'phone', label: 'Celular' },
   { key: 'email', label: 'Correo' },
   { key: 'userVehicles', label: 'Vehículos', isModal: true },
-  { key: 'createdAt', label: 'F. Registro' },
+  { key: 'createdAt', label: 'F. Registro', sortable: true, sortKey: 'createdAt' },
   { key: 'status', label: 'Estado' }
 ];

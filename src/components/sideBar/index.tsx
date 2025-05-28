@@ -1,4 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+//import NotificationTest from '../notificationTest/notificationTest';
+
+
 import { 
   PermIdentity,
   DirectionsCarFilledOutlined,
@@ -8,7 +11,7 @@ import {
   Logout 
 } from '@mui/icons-material';
 import { OptionCard } from './optionCard';
-import EQlogo from '../../assets/images/EQBlanco.png';
+import EQlogo from '../../assets/images/NewLogoJustEBlanco.png';
 import './styled.css';
 
 // Definimos los items del menú
@@ -48,12 +51,15 @@ export const Sidebar = () => {
         ))}
       </div>
 
+       {/* <NotificationTest /> */}
+
         <div 
           className="logout-section"
           onClick={() => {
             localStorage.removeItem('token');
             navigate('/login');
           }}
+          role='button'
         >
           <Logout className="logout-icon" />
           <span className="logout-label">Cerrar Sesión</span>

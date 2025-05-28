@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { api } from '../../../services/api';
 import { ENDPOINTS } from '../../../services/endPoints';
-import { useServicesStore, Service } from '../../../store/services';
+import { Service } from '../../../store/services';
 
 
 // Interfaz para crear un nuevo servicio - la imagen es obligatoria
@@ -47,10 +47,8 @@ interface ServiceParams {
 
 // Hook personalizado para gestionar los servicios
 export const useServices = () => {
-  // Estado global de servicios usando Zustand
-  const { services: storedServices, setServices } = useServicesStore();
-
   // Estados locales para manejar la UI
+  const [services, setServices] = useState<Service[]>([]);                  // Estado local de servicios
   const [loading, setLoading] = useState(true);                             // Estado de carga
   const [error, setError] = useState<string | null>(null);                  // Estado de error
   const [meta, setMeta] = useState<ServiceResponse['meta'] | null>(null);   // Metadatos de paginación
@@ -58,26 +56,19 @@ export const useServices = () => {
   // Estado para parámetros de consulta con valores por defecto
   const [params, setParams] = useState<ServiceParams>({
     page: 1,      // Primera página
-    take: 10,     // 10 elementos por página
+    take: 20,     // 20 elementos por página
     order: 'ASC'  // Orden ascendente
   });
 
   // Función para obtener la lista de servicios del backend
   const fetchServices = async (
       page: number = 1, 
-      take: number = 10, 
+      take: number = 12, 
       order: 'ASC' | 'DESC' = 'ASC', 
       search?: string
     ) => {
     try {
-      //console.log('[Services Hook] Starting to fetch services');
       setLoading(true);
-
-      
-      // const token = localStorage.getItem('token');
-
-      //console.log(localStorage)
-      //console.log('[Services Hook] Current token:', token);
 
       const params: Record<string, any> = {
         page,
@@ -88,17 +79,11 @@ export const useServices = () => {
       if (search) {
         params.search = search;
       }
-
-      //console.log('[Services Hook] Fetching with params:', params);
-
       const response = await api.get<ServiceResponse>(ENDPOINTS.SERVICES.LIST, {
         params
       });
 
-      //console.log('[Services Hook] Services fetched successfully:', response.data);
-
       setServices(response.data.data);
-      //console.log('[Services Hook] Services stored in global state');
       setMeta(response.data.meta);
       setError(null);
     } catch (err) {
@@ -106,23 +91,14 @@ export const useServices = () => {
       setError('Error al cargar los servicios');
     } finally {
       setLoading(false);
-      //console.log('[Services Hook] Fetch operation completed');
     }
   };
 
   useEffect(() => {
     // Si hay servicios en el store y no hay cambios en los parámetros, no hacemos fetch
-    if (storedServices.length > 0 &&
-      params.page === 1 &&
-      params.take === 10 &&
-      params.order === 'ASC' &&
-      !params.search) {
-      //console.log('[Services Hook] Using stored services:', storedServices.length);
-      setLoading(false);
-      return;
-    }
 
-    //console.log('[Services Hook] Fetching services with params:', params);
+
+  
     fetchServices(params.page, params.take, params.order, params.search);
   }, [params]);
 
@@ -144,9 +120,9 @@ export const useServices = () => {
     // Esperar un ciclo para asegurar que newOrder está actualizado
     setTimeout(async () => {
       const orderIds = newOrder.map(s => s.id);
-      console.log('[updateServiceOrder] Enviando orden PUT:', orderIds);
-      const response = await api.put(ENDPOINTS.SERVICES.ORDER_LIST, { orderIds });
-      console.log('[updateServiceOrder] Respuesta del backend:', response.status, response.data);
+     
+      await api.put(ENDPOINTS.SERVICES.ORDER_LIST, { orderIds });
+     
       await fetchServices();
       setError(null);
     }, 0);
@@ -236,12 +212,12 @@ export const useServices = () => {
       payload = formData;
       headers['Content-Type'] = 'multipart/form-data';
       headers['Authorization'] = api.defaults.headers.common['Authorization'];
-      console.log('[updateService] PATCH usando FormData:', Array.from(formData.entries()));
+     
     } else {
       // JSON normal
       headers['Content-Type'] = 'application/json';
       headers['Authorization'] = api.defaults.headers.common['Authorization'];
-      console.log('[updateService] PATCH usando JSON:', serviceData);
+
     }
 
     const response = await api.patch<Service>(
@@ -261,19 +237,83 @@ export const useServices = () => {
   }
 };
 
-  const getServiceById = (id: number): Service | undefined => {
-    return storedServices.find(service => service.id === id);
+  // Cache para evitar peticiones repetidas al backend
+  const serviceRequestCache: Record<number, {
+    timestamp: number;
+    promise: Promise<Service | undefined>;
+  }> = {};
+  
+  // Tiempo de vida del cache (5 segundos)
+  const CACHE_TTL = 5000;
+
+
+  const getServiceById = async (id: number, forceRefresh: boolean = false): Promise<Service | undefined> => {
+    // Primero intentamos encontrar el servicio en el array local (cache)
+    const cachedService = services.find(service => service.id === id);
+    
+    // Si lo encontramos en cache y no se fuerza refresh, lo devolvemos
+    if (cachedService && !forceRefresh) {
+    
+      return cachedService;
+    }
+    
+    // Verificamos si ya hay una petición en curso para este ID
+    const now = Date.now();
+    const cachedRequest = serviceRequestCache[id];
+    
+    if (cachedRequest && now - cachedRequest.timestamp < CACHE_TTL && !forceRefresh) {
+    
+      return cachedRequest.promise;
+    }
+
+    // Creamos la promesa para la petición
+    const fetchPromise = (async () => {
+      try {
+        const response = await api.get<Service>(`${ENDPOINTS.SERVICES.LIST}/${id}`);
+
+        // Actualizamos el array local con el servicio obtenido
+        setServices(prevServices => {
+          // Si el servicio ya existe en el array, lo actualizamos
+          const index = prevServices.findIndex(s => s.id === id);
+          if (index !== -1) {
+            const updatedServices = [...prevServices];
+            updatedServices[index] = response.data;
+            return updatedServices;
+          }
+          // Si no existe, lo añadimos
+          return [...prevServices, response.data];
+        });
+        
+        return response.data;
+      } catch (error) {
+        console.error(`[getServiceById] Error al obtener servicio ${id}:`, error);
+        return undefined;
+      } finally {
+        // Limpiamos el cache después del tiempo de vida
+        setTimeout(() => {
+          delete serviceRequestCache[id];
+        }, CACHE_TTL);
+      }
+    })();
+    
+    // Guardamos la promesa en el cache
+    serviceRequestCache[id] = {
+      timestamp: now,
+      promise: fetchPromise
+    };
+    
+    return fetchPromise;
   };
 
   const deleteService = async (id: number) => {
   try {
-    console.log('[deleteService] Intentando eliminar servicio con id:', id);
-    const response = await api.delete(`${ENDPOINTS.SERVICES.LIST}/${id}`);
-    console.log('[deleteService] Respuesta del backend:', response.status, response.data);
+   
+    await api.delete(`${ENDPOINTS.SERVICES.LIST}/${id}`);
+    
     await fetchServices();
     return { success: true };
   } catch (err) {
-    console.error('[deleteService] Error al eliminar servicio:', err);
+   
     setError('Error al eliminar el servicio');
     return { success: false, error: 'Error al eliminar el servicio' };
   }
@@ -287,7 +327,7 @@ export const useServices = () => {
   };
 
   return {
-    services: storedServices,
+    services,
     loading,
     error,
     meta,

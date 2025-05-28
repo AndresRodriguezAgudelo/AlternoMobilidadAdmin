@@ -20,8 +20,8 @@
 }
 
 .custom-button.disabled {
-  background-color: var(--gray-50);
-  color: var(--gray-400);
+  background-color: var(--gray-200);
+  color: white;
   cursor: not-allowed;
 }
 

@@ -5,40 +5,48 @@ import { ENDPOINTS } from '../../../services/endPoints';
 interface UseDownloadReportParams {
   module: string;
   currentPage: number;
+  specificModule?: string;
 }
 
 interface DownloadReportParams {
-  search?: string;
-  order?: 'ASC' | 'DESC';
+  [key: string]: any;
 }
 
-export const useDownloadReport = ({ module, currentPage }: UseDownloadReportParams) => {
+export const useDownloadReport = ({ module, currentPage, specificModule }: UseDownloadReportParams) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const downloadReport = async ({ search = '', order = 'ASC' }: DownloadReportParams = {}) => {
+  const downloadReport = async (filters: DownloadReportParams = {}) => {
     try {
       setIsDownloading(true);
       setError(null);
 
-      
-      const response = await api.get(ENDPOINTS.REPORTS.DOWNLOAD(module), {
-        params: {
-          search,
-          order,
-          page: currentPage,
-          take: 10
-        },
-        responseType: 'blob'
-      });
+      const url = ENDPOINTS.REPORTS.DOWNLOAD(module);
+      let response;
+      if (module === 'queries') {
+        // Botón descarga Excel: GET puro sin parámetros
+        response = await api.get(url, { responseType: 'blob' });
+      } else {
+        // GET con paginación, orden y filtros para otros módulos
+        const params: Record<string, any> = { page: currentPage, take: 10, order: 'ASC', ...filters };
+        
+        // Agregar el parámetro de búsqueda si se proporciona specificSearch
+        if (specificModule) {
+          params.module = specificModule;
+        } else if (module === 'payments') {
+          // Valor por defecto para el módulo de pagos
+          params.module = 'Link de pago';
+        }
 
-      // Crear un blob y descargar el archivo
+        
+        response = await api.get(url, { params, responseType: 'blob' });
+      }
+
       const blob = new Blob([response.data], { 
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
       });
-      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = url;
+      link.href = window.URL.createObjectURL(blob);
       link.setAttribute('download', `${module}-report.xlsx`);
       document.body.appendChild(link);
       link.click();

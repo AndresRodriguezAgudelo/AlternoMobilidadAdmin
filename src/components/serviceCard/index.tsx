@@ -14,9 +14,9 @@ interface ServiceCardProps {
   isHighlighted?: boolean;
 }
 
-const defaultHandleEdit = () => console.log('Edit action - to be implemented');
-const defaultHandleDelete = () => console.log('Delete action - to be implemented');
-const defaultHandleDragStart = () => console.log('Drag start - to be implemented');
+const defaultHandleEdit = () => {}
+const defaultHandleDelete = () => {}
+const defaultHandleDragStart = () => {}
 
 export const ServiceCard = ({
   id,
