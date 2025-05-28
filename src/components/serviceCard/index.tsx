@@ -1,5 +1,6 @@
 import { DragIndicator, ModeEditOutlined, DeleteOutlineOutlined } from '@mui/icons-material';
 import { IconButton } from '../buttons/iconButton';
+import imageTest from '../../assets/images/imageService.png';
 import './styled.css';
 
 interface ServiceCardProps {
@@ -42,7 +43,16 @@ export const ServiceCard = ({
       <div className={`service-content ${isHighlighted ? 'highlight' : ''}`}>
 
         <div className="service-info">
-          <img src={image} alt={`Servicio ${id}`} className="service-image" />
+          <img
+            src={image}
+            alt={`Servicio ${id}`}
+            className="service-image"
+            style={{ width: '150px', height: '100px', objectFit: 'cover', borderRadius: '8px' }}
+            onError={e => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== imageTest) target.src = imageTest;
+            }}
+          />
           <div className="service-text">
             <p className="service-description">{description}</p>
             {link && <a href={link} target="_blank" rel="noopener noreferrer" className="service-link">{link}</a>}

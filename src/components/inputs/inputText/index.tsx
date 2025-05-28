@@ -10,6 +10,7 @@ interface InputTextProps {
   validation?: 'mail';
   error?: boolean;
   heightSize?: number;
+  errorMessage?: string;
 }
 
 export const InputText = ({ 
@@ -18,7 +19,8 @@ export const InputText = ({
   onChange, 
   placeholder, 
   validation,
-  heightSize
+  heightSize,
+  errorMessage
 }: InputTextProps) => {
   const { error } = validation === 'mail' 
     ? useMailValidation(value)
@@ -42,7 +44,7 @@ export const InputText = ({
       ) : (
         <input
           type="text"
-          className={`input-text ${error ? 'input-text-error' : ''}`}
+          className={`input-text ${(error || errorMessage) ? 'input-text-error' : ''}`}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
@@ -53,6 +55,11 @@ export const InputText = ({
         <div className="input-text-error-container">
           <span className="input-text-error-icon">⚠</span>
           <span className="input-text-error-message">{error}</span>
+        </div>
+      )}
+      {errorMessage && (
+        <div className="input-text-error-container">
+          <span className="input-text-error-message">{errorMessage}</span>
         </div>
       )}
     </div>

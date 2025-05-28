@@ -5,7 +5,15 @@ export const ENDPOINTS = {
     LOGIN: `${API_BASE_URL}/auth/login-email`
   },
   SERVICES: {
-    LIST: `${API_BASE_URL}/servicing`
+    LIST: `${API_BASE_URL}/servicing`,
+    ORDER_LIST: `${API_BASE_URL}/list`
+  },
+  GUIDES: {
+    LIST: `${API_BASE_URL}/guides`,
+    DETAIL: (id: number | string) => `${API_BASE_URL}/guides/${id}`
+  },
+  IMAGES: {
+    FILE: (key: string) => `${API_BASE_URL}/files/file/${key}`
   },
   USERS: {
     LIST: `${API_BASE_URL}/user`,

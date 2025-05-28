@@ -1,6 +1,7 @@
 import { Edit, Delete } from '@mui/icons-material';
 import { IconButton } from '../buttons/iconButton';
 import './styled.css';
+import imageService from '../../assets/images/imageService.png';
 
 interface GuideCardProps {
   imageUrl: string;
@@ -32,10 +33,25 @@ export const GuideCard = ({
     }
   };
 
+  // Si imageUrl es vacío, null, undefined o falsy, usar imagen por defecto
+  const displayImage = imageUrl ? imageUrl : imageService;
+
   return (
     <div className="guide-card">
       <div className="guide-image">
-        <img src={imageUrl} alt={title} />
+        <img
+          src={displayImage}
+          alt={title}
+          style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '10px', background: '#f5f5f5' }}
+          onError={e => {
+            const target = e.target as HTMLImageElement;
+            // Solo reemplaza si aún no es la imagen por defecto
+            if (!target.src.includes('imageService.png')) {
+              console.warn('[GuideCard] Imagen no encontrada, usando fallback:', target.src);
+              target.src = imageService;
+            }
+          }}
+        />
       </div>
       
       <div className="guide-info">
@@ -49,14 +65,16 @@ export const GuideCard = ({
         <span className="guide-date">{date}</span>
         <div className="guide-buttons">
           <IconButton
+            backgroundColor="#e8f7fc"
+            color="black"
             Icon={Edit}
             onClick={handleEdit}
-            backgroundColor="transparent"
           />
           <IconButton
+            backgroundColor="#e8f7fc"
+            color="red"
             Icon={Delete}
             onClick={handleDelete}
-            backgroundColor="transparent"
           />
         </div>
       </div>

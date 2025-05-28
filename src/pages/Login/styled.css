@@ -76,9 +76,13 @@
   align-items: center;
 }
 
+.login-options + .input-text-error-container {
+  margin-top: -1.25rem;
+}
+
 .forgot-password {
   font-size: 0.875rem;
-}
+} 
 
 .forgot-password-link {
   color: var(--blue-light);

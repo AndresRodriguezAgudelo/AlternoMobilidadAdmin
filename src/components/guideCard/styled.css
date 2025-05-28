@@ -1,10 +1,10 @@
 .guide-card {
   display: flex;
-  background: white;
+  background: rgb(233, 247, 252);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 16px;
+  margin: 0;
 }
 
 .guide-image {
@@ -45,11 +45,25 @@
 }
 
 .guide-actions {
-  padding: 16px;
+  padding: 16px 16px 16px 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-end;
+  min-width: 90px;
+}
+
+.guide-date {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 12px;
+}
+
+.guide-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 0;
 }
 
 .guide-date {

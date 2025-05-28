@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { VisibilityOutlined, VisibilityOffOutlined } from '@mui/icons-material';
 import './styled.css';
 
 interface InputPasswordProps {
@@ -9,6 +10,7 @@ interface InputPasswordProps {
   error?: boolean;
   resetPass?: boolean;
   onResetClick?: () => void;
+  errorMessage?: string;
 }
 
 export const InputPassword = ({ 
@@ -17,7 +19,8 @@ export const InputPassword = ({
   onChange, 
   placeholder,
   resetPass = false,
-  onResetClick
+  onResetClick,
+  errorMessage
 }: InputPasswordProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -42,7 +45,7 @@ export const InputPassword = ({
       <div className="input-password-wrapper">
         <input
           type={showPassword ? "text" : "password"}
-          className="input-password"
+          className={`input-password ${errorMessage ? 'input-password-error' : ''}`}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
@@ -53,10 +56,20 @@ export const InputPassword = ({
           className="input-password-toggle"
           onClick={() => setShowPassword(!showPassword)}
         >
-          {showPassword ? '👁️' : '👁️‍🗨️'}
+          {showPassword ? (
+            <VisibilityOffOutlined style={{ fontSize: 22, color: 'black' }} />
+          ) : (
+            <VisibilityOutlined style={{ fontSize: 22, color: 'black' }} />
+          )}
         </button>
       </div>
 
+      {errorMessage && (
+        <div className="input-text-error-container">
+          <span className="input-text-error-icon">⚠</span>
+          <span className="input-text-error-message">{errorMessage}</span>
+        </div>
+      )}
     </div>
   );
 };

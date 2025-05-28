@@ -34,29 +34,7 @@
   --font-family: 'Geomanist', sans-serif;
 }
 
-@font-face {
-  font-family: 'Geomanist';
-  src: url('./assets/geomanist/geomanist-regular-webfont.woff2') format('woff2'),
-       url('./assets/geomanist/geomanist-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 
-@font-face {
-  font-family: 'Geomanist';
-  src: url('./assets/geomanist/geomanist-medium-webfont.woff2') format('woff2'),
-       url('./assets/geomanist/geomanist-medium-webfont.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Geomanist';
-  src: url('./assets/geomanist/geomanist-bold-webfont.woff2') format('woff2'),
-       url('./assets/geomanist/geomanist-bold-webfont.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-}
 
 * {
   margin: 0;

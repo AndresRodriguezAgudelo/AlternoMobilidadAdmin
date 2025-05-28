@@ -126,24 +126,39 @@ export const useServices = () => {
     fetchServices(params.page, params.take, params.order, params.search);
   }, [params]);
 
-  const updateServiceOrder = (fromId: number, toId: number) => {
-    const updatedServices = (prevServices: Service[]): Service[] => {
+  const updateServiceOrder = async (fromId: number, toId: number) => {
+  setLoading(true);
+  try {
+    // Reordenar localmente y obtener el nuevo orden
+    let newOrder: Service[] = [];
+    setServices((prevServices: Service[]) => {
       const newServices = [...prevServices];
       const fromIndex = newServices.findIndex(service => service.id === fromId);
       const toIndex = newServices.findIndex(service => service.id === toId);
-
-      // Reordenar el array
       const [movedService] = newServices.splice(fromIndex, 1);
       newServices.splice(toIndex, 0, movedService);
+      newOrder = newServices;
+      return newServices;
+    });
 
-      // Actualizar IDs basados en la nueva posición
-      return newServices.map((service, index) => ({
-        ...service,
-        id: index + 1
-      }));
-    };
-    setServices(updatedServices);
-  };
+    // Esperar un ciclo para asegurar que newOrder está actualizado
+    setTimeout(async () => {
+      const orderIds = newOrder.map(s => s.id);
+      console.log('[updateServiceOrder] Enviando orden PUT:', orderIds);
+      const response = await api.put(ENDPOINTS.SERVICES.ORDER_LIST, { orderIds });
+      console.log('[updateServiceOrder] Respuesta del backend:', response.status, response.data);
+      await fetchServices();
+      setError(null);
+    }, 0);
+    return { success: true };
+  } catch (err) {
+    console.error('[updateServiceOrder] Error al actualizar orden:', err);
+    setError('Error al actualizar el orden de servicios');
+    return { success: false, error: 'Error al actualizar el orden de servicios' };
+  } finally {
+    setLoading(false);
+  }
+};
 
   /**
    * Crea un nuevo servicio con imagen
@@ -204,35 +219,65 @@ export const useServices = () => {
   };
 
   const updateService = async (id: number, serviceData: UpdateServiceDTO) => {
-    try {
-      setLoading(true);
-      const response = await api.patch<Service>(`${ENDPOINTS.SERVICES.LIST}/${id}`, serviceData);
-      // Forzar una actualización completa de la lista para mantener la consistencia
-      await fetchServices();
-      return { success: true, data: response.data };
-    } catch (err) {
-      console.error('[Services Hook] Error updating service:', err);
-      setError('Error al actualizar el servicio');
-      return { success: false, error: 'Error al actualizar el servicio' };
-    } finally {
-      setLoading(false);
+  try {
+    setLoading(true);
+    let payload: any = serviceData;
+    let headers: any = {};
+    let isFormData = false;
+
+    // Si hay imagen y es File, usar FormData
+    if (serviceData.image && serviceData.image instanceof File) {
+      isFormData = true;
+      const formData = new FormData();
+      formData.append('file', serviceData.image);
+      if (serviceData.name) formData.append('name', serviceData.name);
+      if (serviceData.link) formData.append('link', serviceData.link);
+      if (serviceData.description) formData.append('description', serviceData.description);
+      payload = formData;
+      headers['Content-Type'] = 'multipart/form-data';
+      headers['Authorization'] = api.defaults.headers.common['Authorization'];
+      console.log('[updateService] PATCH usando FormData:', Array.from(formData.entries()));
+    } else {
+      // JSON normal
+      headers['Content-Type'] = 'application/json';
+      headers['Authorization'] = api.defaults.headers.common['Authorization'];
+      console.log('[updateService] PATCH usando JSON:', serviceData);
     }
-  };
+
+    const response = await api.patch<Service>(
+      `${ENDPOINTS.SERVICES.LIST}/${id}`,
+      payload,
+      { headers, ...(isFormData ? { transformRequest: [(data: any) => data] } : {}) }
+    );
+    // Forzar una actualización completa de la lista para mantener la consistencia
+    await fetchServices();
+    return { success: true, data: response.data };
+  } catch (err) {
+    console.error('[Services Hook] Error updating service:', err);
+    setError('Error al actualizar el servicio');
+    return { success: false, error: 'Error al actualizar el servicio' };
+  } finally {
+    setLoading(false);
+  }
+};
 
   const getServiceById = (id: number): Service | undefined => {
     return storedServices.find(service => service.id === id);
   };
 
-  const deleteService = (id: number) => {
-    const updatedServices = (prevServices: Service[]): Service[] =>
-      prevServices
-        .filter(service => service.id !== id)
-        .map((service, index) => ({
-          ...service,
-          id: index + 1
-        }));
-    setServices(updatedServices);
-  };
+  const deleteService = async (id: number) => {
+  try {
+    console.log('[deleteService] Intentando eliminar servicio con id:', id);
+    const response = await api.delete(`${ENDPOINTS.SERVICES.LIST}/${id}`);
+    console.log('[deleteService] Respuesta del backend:', response.status, response.data);
+    await fetchServices();
+    return { success: true };
+  } catch (err) {
+    console.error('[deleteService] Error al eliminar servicio:', err);
+    setError('Error al eliminar el servicio');
+    return { success: false, error: 'Error al eliminar el servicio' };
+  }
+};  
 
   const updateParams = (newParams: Partial<ServiceParams>) => {
     setParams(prev => ({

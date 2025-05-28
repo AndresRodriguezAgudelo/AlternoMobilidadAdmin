@@ -58,7 +58,7 @@ const Services = () => {
           <div key={service.id} onDrop={handleDrop(service.id)}>
             <ServiceCard
               id={service.id}
-              image={imageTest}
+              image={service.key ? `/api/sign/v1/files/file/${service.key}` : imageTest}
               link={service.link}
               description={service.description}
               onEdit={() => handleEditService(service.id)}

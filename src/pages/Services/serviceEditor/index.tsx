@@ -18,7 +18,8 @@ export const ServiceEditor = () => {
     name: '',
     webLink: '',
     description: '',
-    image: undefined as File | undefined
+    image: undefined as File | undefined,
+    imageChanged: false // NUEVO: indica si la imagen fue cambiada
   });
 
   const handleInputChange = (field: string) => (value: string) => {
@@ -31,7 +32,8 @@ export const ServiceEditor = () => {
   const handleImageChange = (file: File | null) => {
     setFormData(prev => ({
       ...prev,
-      image: file || undefined
+      image: file || undefined,
+      imageChanged: !!file // true si hay archivo, false si se borra
     }));
   };
 
@@ -43,7 +45,8 @@ export const ServiceEditor = () => {
           name: service.name,
           webLink: service.link,
           description: service.description,
-          image: undefined // La imagen existente ya está en el key
+          image: undefined, // La imagen existente ya está en el key
+          imageChanged: false // <-- necesario para cumplir el tipado
         });
       }
     }
@@ -72,12 +75,15 @@ export const ServiceEditor = () => {
       
       if (isEditing && serviceId) {
         // Para edición, solo enviamos los campos que tenemos
-        const updateData = {
+        const updateData: any = {
           name: formData.name,
           link: link,
           description: formData.description,
-          ...(formData.image ? { image: formData.image } : {})
         };
+        // Solo agrega la imagen si fue cambiada
+        if (formData.imageChanged && formData.image) {
+          updateData.image = formData.image;
+        }
         const result = await updateService(serviceId, updateData);
         success = result.success;
       } else {
@@ -147,6 +153,12 @@ export const ServiceEditor = () => {
         <InputFile
           label="Imagen"
           onChange={handleImageChange}
+          placeholderImage={
+            isEditing && serviceId && getServiceById(serviceId)?.key &&
+            !getServiceById(serviceId)!.key.includes('imageService.png')
+              ? `/api/sign/v1/files/file/${getServiceById(serviceId)!.key}`
+              : undefined
+          }
         />
       </div>
     </div>

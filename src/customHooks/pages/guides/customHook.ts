@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { api } from '../../../services/api';
+import { ENDPOINTS } from '../../../services/endPoints';
 import { useGuidesStore } from '../../../store/guides';
 import { GuideParams, GuideResponse } from '../../../types/guide';
 
@@ -18,14 +19,13 @@ export const useGuides = () => {
       setLoading(true);
       setError(null);
 
-      const token = localStorage.getItem('token');
-      const response = await axios.get<GuideResponse>('/api/sign/v1/guides', {
-        params,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      const response = await api.get<GuideResponse>(ENDPOINTS.GUIDES.LIST, {
+        params
       });
-
+      console.log('[fetchGuides] Respuesta:', response.data);
+      if (!response.data.data || response.data.data.length === 0) {
+        console.warn('[fetchGuides] No hay guías disponibles');
+      }
       setGuides(response.data.data);
       setMeta(response.data.meta);
     } catch (err) {

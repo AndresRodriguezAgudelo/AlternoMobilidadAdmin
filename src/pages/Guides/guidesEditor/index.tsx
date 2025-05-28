@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TitleSearch } from '../../../components/titleSearch';
 import { InputText } from '../../../components/inputs/inputText';
@@ -6,6 +6,8 @@ import { InputFile } from '../../../components/inputs/inputFile';
 import { InputSelect } from '../../../components/inputs/inputSelect';
 import { FatButton } from '../../../components/buttons/fatButton';
 import './styled.css';
+import { ENDPOINTS } from '../../../services/endPoints';
+import { api } from '../../../services/api';
 
 export const GuidesEditor = () => {
   const { id } = useParams();
@@ -29,18 +31,82 @@ export const GuidesEditor = () => {
     category: 'consejos',
     mainImage: null as File | null,
     description: '',
-    additionalFiles: [] as FileItem[]
+    keyMain: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!guideId) return;
+    setLoading(true);
+    setError(null);
+    api.get(ENDPOINTS.GUIDES.DETAIL(guideId))
+      .then(({ data }) => {
+        setFormData(prev => ({
+          ...prev,
+          title: data.name || '',
+          category: data.categoryId ? String(data.categoryId) : '',
+          description: data.description || '',
+          mainImage: null,
+          keyMain: data.keyMain || '',
+        }));
+      })
+      .catch(err => {
+        setError('No se pudo cargar la guía.');
+      })
+      .finally(() => setLoading(false));
+  }, [guideId]);
 
   const handleBack = () => {
     navigate('/guias');
   };
 
-  const handleSubmit = async () => {
-    // TODO: Implementar la lógica de guardado
-    console.log('Form data:', formData);
-    handleBack();
+  const handleImageChange = (file: File | null) => {
+    setFormData(prev => ({ ...prev, mainImage: file }));
   };
+
+  const handleSubmit = async () => {
+    if (!guideId) return;
+    setLoading(true);
+    setError(null);
+    try {
+      let payload: any = {
+        name: formData.title,
+        description: formData.description
+      };
+      if (formData.mainImage instanceof File) {
+        const formDataData = new FormData();
+        formDataData.append('name', formData.title);
+        formDataData.append('description', formData.description);
+        formDataData.append('file', formData.mainImage);
+        payload = formDataData;
+      }
+      let headers: any = {};
+      if (formData.mainImage instanceof File) {
+        headers['Content-Type'] = 'multipart/form-data';
+      }
+      // Mostrar el body que se va a enviar
+      if (payload instanceof FormData) {
+        // Mostrar todas las entradas del FormData
+        for (let pair of payload.entries()) {
+          console.log('FormData PATCH:', pair[0], pair[1]);
+        }
+      } else {
+        console.log('JSON PATCH:', JSON.stringify(payload));
+      }
+      await api.patch(
+        ENDPOINTS.GUIDES.DETAIL(guideId),
+        payload,
+        headers['Content-Type'] ? { headers, transformRequest: [(data: any) => data] } : undefined
+      );
+      setLoading(false);
+      navigate('/guias');
+    } catch (err) {
+      setError('Error al actualizar la guía');
+      setLoading(false);
+    }
+  };
+
 
   return (
     <div className="guide-editor-container">
@@ -53,6 +119,9 @@ export const GuidesEditor = () => {
           onClick: handleSubmit
         }}
       />
+
+      {loading && <div style={{ textAlign: 'center', color: '#1976d2', margin: '24px 0' }}>Cargando datos de la guía...</div>}
+      {error && <div style={{ textAlign: 'center', color: 'red', margin: '24px 0' }}>{error}</div>}
 
       <div className="guide-editor-form">
         <InputText
@@ -71,6 +140,11 @@ export const GuidesEditor = () => {
         <InputFile
           label="Imagen Principal"
           onChange={(file) => setFormData(prev => ({ ...prev, mainImage: file }))}
+          placeholderImage={
+            isEditing && guideId && formData.keyMain && !formData.keyMain.includes('imageService.png')
+              ? `/api/sign/v1/files/file/${formData.keyMain}`
+              : undefined
+          }
         />
 
         <InputText
@@ -80,39 +154,7 @@ export const GuidesEditor = () => {
           heightSize={200}
         />
 
-        {formData.additionalFiles.map((item, index) => (
-          <InputFile
-            key={index}
-            label={`${item.type === 'image' ? 'Imagen' : 'Video'} Adicional ${index + 1}`}
-            accept={item.type}
-            onChange={(file) => {
-              const newFiles = [...formData.additionalFiles];
-              if (file) {
-                newFiles[index] = { ...newFiles[index], file };
-              } else {
-                newFiles.splice(index, 1);
-              }
-              setFormData(prev => ({ ...prev, additionalFiles: newFiles }));
-            }}
-          />
-        ))}
 
-        <div className="add-file-buttons">
-          <FatButton
-            label="Agregar Imagen"
-            onClick={() => setFormData(prev => ({
-              ...prev,
-              additionalFiles: [...prev.additionalFiles, { file: null, type: 'image' }]
-            }))}
-          />
-          <FatButton
-            label="Agregar Video"
-            onClick={() => setFormData(prev => ({
-              ...prev,
-              additionalFiles: [...prev.additionalFiles, { file: null, type: 'video' }]
-            }))}
-          />
-        </div>
       </div>
     </div>
   );

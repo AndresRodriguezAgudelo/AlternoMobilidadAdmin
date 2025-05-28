@@ -51,10 +51,10 @@
 
 .input-text-error-icon {
   color: #FF4D4D;
-  font-size: var(--size-sm);
+  font-size: 0.95em;
 }
 
 .input-text-error-message {
-  font-size: var(--size-sm);
+  font-size: 0.82rem;
   color: #FF4D4D;
 }
